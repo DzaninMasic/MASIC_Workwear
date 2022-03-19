@@ -13,7 +13,7 @@ class ZippersDao extends BaseDao{
   }
   //ADD TO DATABASE
   public function add($name, $type, $amount, $size, $available, $color){
-    $stmt = $this->conn->prepare("INSERT INTO threads (name, type, amount, size, available, color) VALUES (:name, :type, :amount, :size, :available, :color)");
+    $stmt = $this->conn->prepare("INSERT INTO zippers (name, type, amount, size, available, color) VALUES (:name, :type, :amount, :size, :available, :color)");
     $stmt->execute(['name' => $name, 'type' => $type, 'amount'=>$amount, 'size' => $size, 'available' => $available, 'color' => $color]);
   }
   //DELETE (kinda useless)
