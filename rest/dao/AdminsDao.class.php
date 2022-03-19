@@ -1,9 +1,9 @@
 
 <?php
 
-class ProjectDao{
+class AdminsDao{
 
-  protected $conn;
+  private $conn;
 
   //CONSTRUCTOR
   public function __construct(){
@@ -17,25 +17,25 @@ class ProjectDao{
 }
   //GET ALL
   public function get_all(){
-    $stmt = $this->conn->prepare("SELECT * FROM material");
+    $stmt = $this->conn->prepare("SELECT * FROM admins");
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
   //ADD TO DATABASE
-  public function add($name, $color, $length, $available){
-    $stmt = $this->conn->prepare("INSERT INTO material (name, color, length, available) VALUES (:name, :color, :length, :available)");
-    $stmt->execute(['name' => $name, 'color' => $color,'length' => $length,'available' => $available]);
+  public function add($name, $email, $password){
+    $stmt = $this->conn->prepare("INSERT INTO admins (name, email, password) VALUES (:name, :email, :password)");
+    $stmt->execute(['name' => $name, 'email' => $email,'password' => $password]);
   }
   //DELETE (kinda useless)
   public function delete($id){
-    $stmt = $this->conn->prepare("DELETE FROM material WHERE id=:id");
+    $stmt = $this->conn->prepare("DELETE FROM admins WHERE id=:id");
     $stmt->bindParam(':id', $id); // SQL injection prevention
     $stmt->execute();
   }
   //UPDATE
   public function update($id, $name, $color, $length, $available){
-    $stmt = $this->conn->prepare("UPDATE material SET name=:name, color=:color, length=:length, available=:available WHERE id=:id");
-    $stmt->execute(['id' => $id, 'name' => $name, 'color' => $color, 'length'=>$length, 'available'=>$available]);
+    $stmt = $this->conn->prepare("UPDATE admins SET name=:name, email=:email, password=:password WHERE id=:id");
+    $stmt->execute(['id' => $id, 'name' => $name, 'email' => $email, 'password'=>$password]);
   }
 }
 
