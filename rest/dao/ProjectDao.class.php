@@ -21,10 +21,17 @@ class ProjectDao{
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
+  //GET BY ID
+  public function get_by_id($id){
+    $stmt = $this->conn->prepare("SELECT * FROM material WHERE id = :id");
+    $stmt->execute(['id' => $id]);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return reset($result);
+  }
   //ADD TO DATABASE
-  public function add($name, $color, $length, $available){
+  public function add($data){
     $stmt = $this->conn->prepare("INSERT INTO material (name, color, length, available) VALUES (:name, :color, :length, :available)");
-    $stmt->execute(['name' => $name, 'color' => $color,'length' => $length,'available' => $available]);
+    $stmt->execute($data);
   }
   //DELETE (kinda useless)
   public function delete($id){
@@ -33,9 +40,9 @@ class ProjectDao{
     $stmt->execute();
   }
   //UPDATE
-  public function update($id, $name, $color, $length, $available){
+  public function update($data){
     $stmt = $this->conn->prepare("UPDATE material SET name=:name, color=:color, length=:length, available=:available WHERE id=:id");
-    $stmt->execute(['id' => $id, 'name' => $name, 'color' => $color, 'length'=>$length, 'available'=>$available]);
+    $stmt->execute($data);
   }
 }
 
