@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>Dashboard - MASIC Workwear</title>
+
+  <link href="css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+  <style>
+    .error{
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="container marketing" style="margin-top:50px;">
+      <div id="material-list" class="row">
+        <div class="d-flex justify-content-center">
+          <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;" role="status">
+            <span class="sr-only"></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+</body>
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="id">
+        <input type="text" id="name">
+        <input type="text" id="color">
+        <input type="text" id="length">
+        <input type="text" id="available">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary save-material-button" onclick="saveMaterial()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- MODAL FOR DELETING -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="id-delete-modal">
+        <input type="text" id="name-delete-modal">
+        <input type="text" id="color-delete-modal">
+        <input type="text" id="length-delete-modal">
+        <input type="text" id="available-delete-modal">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary delete-material-button" onclick="deleteMaterial()">Delete item</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- MODAL FOR ADDING NEW ITEM -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="addMaterialForm">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <label>Name</label>
+            <input name="name-add-modal" type="text" class="form-control required" placeholder="Enter name">
+          </div>
+          <div class="form-group">
+            <label>Color</label>
+            <input name="color-add-modal" type="text" class="form-control required" placeholder="Enter color">
+          </div>
+          <div class="form-group">
+            <label>Length</label>
+            <input name="length-add-modal" type="number" class="form-control required" placeholder="Enter length">
+          </div>
+          <div class="form-group">
+            <label>Available</label>
+            <input name="available-add-modal" type="text" class="form-control required" placeholder="Enter availability">
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#addMaterialForm').validate({
+    submitHandler:function(form){
+      var material = Object.fromEntries((new FormData(form)).entries());
+      $.ajax({
+        url: 'rest/services/material/',
+        type: 'POST',
+        data: JSON.stringify(material),
+        contentType: 'application/json',
+        dataType: "json",
+        success: function(result){
+          $("#exampleModal").modal("hide");
+          $('.save-material-button').attr('disabled', false);
+          $("#material-list").html('<div class="d-flex justify-content-center"><div class="spinner-border text-primary" style="width : 5rem ; height : 5rem;" role="status"> <span class="sr-only"></span>  </div></div>');
+          getMaterial();
+        }
+      });
+    }
+  }); //JQUERY VALIDATION
+  getMaterial();
+
+  function getMaterial(){
+    $.get("rest/services/material/", function( data ){
+      $("#material-list").html("");
+      var html="";
+      for(let i=0;i<data.length;i++){
+        html+=`<div class="col-lg-4">
+          <h2>`+ data[i].name +`</h2>
+          <p>`+ data[i].color +`</p>
+          <p>
+            <button type="button" class="btn btn-primary material-button" onclick="showModal(`+data[i].id+`)">
+              Edit material
+            </button>
+            <button type="button" class="btn btn-primary material-button-delete" onclick="showModalDelete(`+data[i].id+`)">
+              Delete material
+            </button>
+          </p>
+        </div>`;
+      }
+      html += `<button type="button" class="btn btn-success" onclick="showModalAdd()">
+        Add material
+      </button>`;
+      $("#material-list").html(html);
+      console.log(data);
+      //alert("Load was performed!");
+    });
+  }
+  //SHOW MODAL
+  function showModal(id){
+    $('.material-button').attr('disabled', true);
+    $('.material-button-delete').attr('disabled', true);
+    $.get("rest/services/material/"+id,function(data){
+      console.log(data);
+      $("#name").val(data.name);
+      $("#id").val(data.id);
+      $("#color").val(data.color);
+      $("#length").val(data.length);
+      $("#available").val(data.available);
+      $("#exampleModal").modal("show");
+      $('.material-button').attr('disabled', false);
+      $('.material-button-delete').attr('disabled', false);
+    });
+  }
+  //DELETE ITEM MODAL
+  function showModalDelete(id){
+    $('.material-button').attr('disabled', true);
+    $('.material-button-delete').attr('disabled', true);
+    $.get("rest/services/material/"+id,function(data){
+      console.log(data);
+      $("#name-delete-modal").val(data.name);
+      $("#id-delete-modal").val(data.id);
+      $("#color-delete-modal").val(data.color);
+      $("#length-delete-modal").val(data.length);
+      $("#available-delete-modal").val(data.available);
+      $("#exampleModal2").modal("show");
+      $('.material-button').attr('disabled', false);
+      $('.material-button-delete').attr('disabled', false);
+    });
+  }
+  //ADD NEW ITEM MODAL
+  function showModalAdd(){
+    $('.material-button').attr('disabled', true);
+    $('.material-button-delete').attr('disabled', true);
+    $.get("rest/services/material/"+id,function(data){
+      console.log(data);
+      $("#name-add-modal").val(data.name);
+      $("#color-add-modal").val(data.color);
+      $("#length-add-modal").val(data.length);
+      $("#available-add-modal").val(data.available);
+      $("#exampleModal3").modal("show");
+      $('.material-button').attr('disabled', false);
+      $('.material-button-delete').attr('disabled', false);
+    });
+  }
+  function saveMaterial(){
+    $('.save-material-button').attr('disabled', true);
+    var material={};
+    //material.id=$('#id').val();
+    material.name=$('#name').val();
+    material.color=$('#color').val();
+    material.length=$('#length').val();
+    material.available=$('#available').val();
+
+    $.ajax({
+      url: 'rest/services/material/'+$('#id').val(),
+      type: 'PUT',
+      data: JSON.stringify(material),
+      contentType: 'application/json',
+      dataType: "json",
+      success: function(result){
+        $("#exampleModal").modal("hide");
+        $('.save-material-button').attr('disabled', false);
+        $("#material-list").html('<div class="d-flex justify-content-center"><div class="spinner-border text-primary" style="width : 5rem ; height : 5rem;" role="status"> <span class="sr-only"></span>  </div></div>');
+        getMaterial();
+      }
+    });
+  }
+  function deleteMaterial(){
+    $('.delete-material-button').attr('disabled', true);
+
+    $.ajax({
+      url: 'rest/services/material/'+$('#id-delete-modal').val(),
+      type: 'DELETE',
+      contentType: 'application/json',
+      dataType: "json",
+      success: function(result){
+        $("#exampleModal2").modal("hide");
+        $('.delete-material-button').attr('disabled', false);
+        $("#material-list").html('<div class="d-flex justify-content-center"><div class="spinner-border text-primary" style="width : 5rem ; height : 5rem;" role="status"> <span class="sr-only"></span>  </div></div>');
+        getMaterial();
+      }
+    });
+  }
+  /*function addMaterial(){
+    $('.delete-material-button').attr('disabled', true);
+    var material={};
+
+    material.name=$('#name-add-modal').val();
+    material.color=$('#color-add-modal').val();
+    material.length=$('#length-add-modal').val();
+    material.available=$('#available-add-modal').val();
+
+    $.ajax({
+      url: 'rest/services/material/'+$('#id').val(),
+      type: 'POST',
+      data: JSON.stringify(material),
+      contentType: 'application/json',
+      dataType: "json",
+      success: function(result){
+        $("#exampleModal").modal("hide");
+        $('.save-material-button').attr('disabled', false);
+        $("#material-list").html('<div class="d-flex justify-content-center"><div class="spinner-border text-primary" style="width : 5rem ; height : 5rem;" role="status"> <span class="sr-only"></span>  </div></div>');
+        getMaterial();
+      }
+    });
+  }*/
+</script>
+
+</html>
