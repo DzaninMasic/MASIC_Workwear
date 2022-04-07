@@ -117,7 +117,7 @@
 </div>
 
 <script>
-  $('#addMaterialForm').validate({
+  /*$('#addMaterialForm').validate({
     submitHandler:function(form){
       var material = Object.fromEntries((new FormData(form)).entries());
       $.ajax({
@@ -134,7 +134,7 @@
         }
       });
     }
-  }); //JQUERY VALIDATION
+  }); *///JQUERY VALIDATION
   getMaterial();
 
   function getMaterial(){
@@ -249,7 +249,7 @@
       }
     });
   }
-  /*function addMaterial(){
+  function addMaterial(){
     $('.delete-material-button').attr('disabled', true);
     var material={};
 
@@ -271,7 +271,7 @@
         getMaterial();
       }
     });
-  }*/
+  }
 </script>
 
 </html>
