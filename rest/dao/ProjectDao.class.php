@@ -21,6 +21,13 @@ class ProjectDao{
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
+  //GET BY ID
+  public function get_by_id($id){
+    $stmt = $this->conn->prepare("SELECT * FROM material WHERE id = :id");
+    $stmt->execute(['id' => $id]);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return reset($result);
+  }
   //ADD TO DATABASE
   public function add($name, $color, $length, $available){
     $stmt = $this->conn->prepare("INSERT INTO material (name, color, length, available) VALUES (:name, :color, :length, :available)");
