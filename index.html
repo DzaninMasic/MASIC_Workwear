@@ -90,27 +90,16 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-          <div class="form-group">
-            <label>Name</label>
-            <input name="name-add-modal" type="text" class="form-control required" placeholder="Enter name">
-          </div>
-          <div class="form-group">
-            <label>Color</label>
-            <input name="color-add-modal" type="text" class="form-control required" placeholder="Enter color">
-          </div>
-          <div class="form-group">
-            <label>Length</label>
-            <input name="length-add-modal" type="number" class="form-control required" placeholder="Enter length">
-          </div>
-          <div class="form-group">
-            <label>Available</label>
-            <input name="available-add-modal" type="text" class="form-control required" placeholder="Enter availability">
-          </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </div>
+        <div class="modal-body">
+          <input type="text" id="name-add-modal">
+          <input type="text" id="color-add-modal">
+          <input type="text" id="length-add-modal">
+          <input type="text" id="available-add-modal">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="addMaterial()">Add item</button>
+        </div>
     </form>
     </div>
   </div>
@@ -121,7 +110,7 @@
     submitHandler:function(form){
       var material = Object.fromEntries((new FormData(form)).entries());
       $.ajax({
-        url: 'rest/services/material/',
+        url: 'rest/services/material/'+$('#id').val(),
         type: 'POST',
         data: JSON.stringify(material),
         contentType: 'application/json',
@@ -130,11 +119,12 @@
           $("#exampleModal").modal("hide");
           $('.save-material-button').attr('disabled', false);
           $("#material-list").html('<div class="d-flex justify-content-center"><div class="spinner-border text-primary" style="width : 5rem ; height : 5rem;" role="status"> <span class="sr-only"></span>  </div></div>');
+          console.log(data);
           getMaterial();
         }
       });
     }
-  }); *///JQUERY VALIDATION
+  });*/ //JQUERY VALIDATION
   getMaterial();
 
   function getMaterial(){
@@ -200,7 +190,7 @@
     $('.material-button').attr('disabled', true);
     $('.material-button-delete').attr('disabled', true);
     $.get("rest/services/material/"+id,function(data){
-      console.log(data);
+      //console.log(data);
       $("#name-add-modal").val(data.name);
       $("#color-add-modal").val(data.color);
       $("#length-add-modal").val(data.length);
@@ -250,7 +240,7 @@
     });
   }
   function addMaterial(){
-    $('.delete-material-button').attr('disabled', true);
+    //$('.delete-material-button').attr('disabled', true);
     var material={};
 
     material.name=$('#name-add-modal').val();
@@ -265,9 +255,9 @@
       contentType: 'application/json',
       dataType: "json",
       success: function(result){
-        $("#exampleModal").modal("hide");
-        $('.save-material-button').attr('disabled', false);
+        $("#exampleModal3").modal("hide");
         $("#material-list").html('<div class="d-flex justify-content-center"><div class="spinner-border text-primary" style="width : 5rem ; height : 5rem;" role="status"> <span class="sr-only"></span>  </div></div>');
+        //console.log(data);
         getMaterial();
       }
     });
