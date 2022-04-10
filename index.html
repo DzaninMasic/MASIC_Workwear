@@ -32,8 +32,8 @@
   </main>
 </body>
 <script src="js/jquery-3.6.0.min.js"></script>
-<script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/jquery.validate.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
 <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 
 <!-- Modal -->
@@ -122,24 +122,24 @@
       <div class="modal-body">
           <div class="form-group">
             <label>Name</label>
-            <input id="name-add-modal" type="text" class="form-control required" placeholder="Enter name">
+            <input name="name" id="name-add-modal" type="text" class="form-control required" placeholder="Enter name">
           </div>
           <div class="form-group">
             <label>Color</label>
-            <input id="color-add-modal" type="text" class="form-control required" placeholder="Enter color">
+            <input name="color" id="color-add-modal" type="text" class="form-control required" placeholder="Enter color">
           </div>
           <div class="form-group">
             <label>Length</label>
-            <input id="length-add-modal" type="number" class="form-control required" placeholder="Enter length">
+            <input name="length" id="length-add-modal" type="number" class="form-control required" placeholder="Enter length">
           </div>
           <div class="form-group">
             <label>Available</label>
-            <input id="available-add-modal" type="text" class="form-control required" placeholder="Enter availability">
+            <input name="available" id="available-add-modal" type="text" class="form-control required" placeholder="Enter availability">
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" onclick="addMaterial()">Add item</button>
+          <button type="submit" class="btn btn-primary">Add item</button>
         </div>
     </form>
     </div>
@@ -147,7 +147,7 @@
 </div>
 
 <script>
-  /*$('#addMaterialForm').validate({
+  $('#addMaterialForm').validate({
     submitHandler:function(form){
       var material = Object.fromEntries((new FormData(form)).entries());
       $.ajax({
@@ -157,15 +157,14 @@
         contentType: 'application/json',
         dataType: "json",
         success: function(result){
-          $("#exampleModal").modal("hide");
-          $('.save-material-button').attr('disabled', false);
+          $("#exampleModal3").modal("hide");
           $("#material-list").html('<div class="d-flex justify-content-center"><div class="spinner-border text-primary" style="width : 5rem ; height : 5rem;" role="status"> <span class="sr-only"></span>  </div></div>');
-          console.log(data);
+          //console.log(data);
           getMaterial();
         }
       });
     }
-  });*/ //JQUERY VALIDATION
+  });//JQUERY VALIDATION
   getMaterial();
 
   function getMaterial(){
@@ -280,7 +279,7 @@
       }
     });
   }
-  function addMaterial(){
+  /*function addMaterial(){
     //$('.delete-material-button').attr('disabled', true);
     var material={};
 
@@ -302,7 +301,7 @@
         getMaterial();
       }
     });
-  }
+  }*/
 </script>
 
 </html>
