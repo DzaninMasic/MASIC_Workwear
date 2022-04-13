@@ -3,8 +3,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require_once 'C:\Bitnami\wampstack-8.1.2-0\apache2\htdocs\MASIC_Workwear\vendor\autoload.php';
-require_once 'C:\Bitnami\wampstack-8.1.2-0\apache2\htdocs\MASIC_Workwear\rest\dao\ProjectDao.class.php';
+require_once 'C:\Bitnami\wampstack-8.1.3-0\apache2\htdocs\MASIC_Workwear\vendor\autoload.php';
+require_once 'C:\Bitnami\wampstack-8.1.3-0\apache2\htdocs\MASIC_Workwear\rest\dao\ProjectDao.class.php';
 Flight::register('projectDao', 'ProjectDao');
 Flight::route('/print', function(){
   echo "This is Dzanin \n";
