@@ -9,6 +9,7 @@
   <title>Dashboard - MASIC Workwear</title>
 
   <link href="css/bootstrap.min.css" rel="stylesheet" />
+  <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
   <style>
     .error{
@@ -34,10 +35,11 @@
 <script src="js/jquery-3.6.0.min.js"></script>
 <script src="js/jquery.validate.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="js/material-service.js"></script>
 <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 
-<!-- Modal -->
+<!-- MODAL FOR UPDATING-->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -56,8 +58,12 @@
         </div>
         <div class="form-group">
           <label>Color</label>
-          <input name="color" id="color" type="text" class="form-control required" placeholder="Enter color">
+          <input name="color_id" id="color_id" type="text" class="form-control required" placeholder="Enter color_id">
         </div>
+        <!--<div class="form-group">
+          <label>Color</label>
+          <input name="color" id="color" type="text" class="form-control required" placeholder="Enter color">
+        </div>-->
         <div class="form-group">
           <label>Length</label>
           <input name="length" id="length" type="number" class="form-control required" placeholder="Enter length">
@@ -125,9 +131,15 @@
             <label>Name</label>
             <input name="name" id="name-add-modal" type="text" class="form-control required" placeholder="Enter name">
           </div>
-          <div class="form-group">
+          <!--<div class="form-group">
             <label>Color</label>
             <input name="color" id="color-add-modal" type="text" class="form-control required" placeholder="Enter color">
+          </div>-->
+          <div class="form-group">
+            <label>Color</label>
+            <select class="form-select" aria-label="Default select example" id="select-color">
+
+            </select>
           </div>
           <div class="form-group">
             <label>Length</label>
@@ -137,6 +149,7 @@
             <label>Available</label>
             <input name="available" id="available-add-modal" type="text" class="form-control required" placeholder="Enter availability">
           </div>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -146,11 +159,37 @@
     </div>
   </div>
 </div>
+<script>
+  let options="";
+  $.get("rest/services/colors/", function( data ){
+    for(let i=0;i<data.length;i++){
+      options+=`<option value="${data[i].id}">${data[i].name}</option>`
+    }
+    document.getElementById("select-color").innerHTML=options;
+  });
+</script>
 
 <script>
   MaterialService.init();
 
+  //document.getElementById("dropdownMenuButton1").addEventListener("click", function(event){
+  //event.preventDefault()
 
+
+  /*function showColors(){
+    //alert("Hello");
+    $.get("rest/services/colors/", function( data ){
+
+      var html="";
+      for(let i=0;i<data.length;i++){
+        html+=`<option value="${data[i].id}">${data[i].name}</option>`
+      }
+      $("#select-color").html(html);
+    });
+  }
+  function pickColor(color){
+    console.log("Tu sam");
+  }*/
 //OLD STUFF AND MODALS
   //DELETE ITEM MODAL
   function showModalDelete(id){
@@ -173,11 +212,11 @@
     $('.material-button').attr('disabled', true);
     $('.material-button-delete').attr('disabled', true);
     $.get("rest/services/material/"+id,function(data){
-      //console.log(data);
       $("#name-add-modal").val(data.name);
       $("#color-add-modal").val(data.color);
       $("#length-add-modal").val(data.length);
       $("#available-add-modal").val(data.available);
+      //$("#select-color option:selected").val(data.color_id);
       $("#exampleModal3").modal("show");
       $('.material-button').attr('disabled', false);
       $('.material-button-delete').attr('disabled', false);

@@ -7,8 +7,12 @@
   Flight::json(Flight::materialService()->get_all());
   });
   //GET INDIVIDUAL BY NAME
-  Flight::route('GET /material/@id', function($id){
+  /*Flight::route('GET /material/@id', function($id){
     Flight::json(Flight::materialService()->get_by_id($id));
+  });*/
+  //GET INDIVIDUAL BY COLOR_ID WHICH INCLUDES THE NAME OF THE Color
+  Flight::route('GET /material/@id', function($id){
+    Flight::json(Flight::materialService()->get_by_color_route($id));
   });
   //GET INDIVIDUAL BY COLOR
   Flight::route('GET /material/@id/colors', function($id){
