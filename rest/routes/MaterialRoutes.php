@@ -1,4 +1,5 @@
 <?php
+
   Flight::route('/print', function(){
     echo "This is Dzanin \n";
   });
