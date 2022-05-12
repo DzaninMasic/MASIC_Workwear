@@ -11,6 +11,7 @@
   Flight::register('adminsDao', 'AdminsDao');
   Flight::register('materialService', 'MaterialService');
   Flight::register('colorsService', 'ColorsService');
+  Flight::register('adminService', 'AdminService');
 
   require_once 'C:\xampp\htdocs\MASIC_Workwear\rest\routes\ColorRoutes.php';
   require_once 'C:\xampp\htdocs\MASIC_Workwear\rest\routes\MaterialRoutes.php';
