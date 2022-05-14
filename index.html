@@ -189,12 +189,25 @@
 </div>
 <script>
   let options="";
-  $.get("rest/services/colors/", function( data ){
+  $.ajax({
+    url: 'rest/services/material/'+$('#id').val(),
+    type: "GET",
+    beforeSend: function(xhr){
+      xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+    },
+    success: function(data){
+      for(let i=0;i<data.length;i++){
+        options+=`<option value="${data[i].id}">${data[i].name}</option>`
+      }
+      document.getElementById("select-color").innerHTML=options;
+    },
+  });
+/*  $.get("rest/services/colors/", function( data ){
     for(let i=0;i<data.length;i++){
       options+=`<option value="${data[i].id}">${data[i].name}</option>`
     }
     document.getElementById("select-color").innerHTML=options;
-  });
+  });*/
 </script>
 
 <script>
