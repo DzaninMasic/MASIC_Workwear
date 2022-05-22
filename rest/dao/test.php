@@ -6,12 +6,13 @@ error_reporting(E_ALL);
   require_once 'ButtonsDao.class.php';
   require_once 'ThreadsDao.class.php';
   require_once 'VelcroDao.class.php';
+  require_once 'ZippersDao.class.php';
 
   //$threadsDao = new ThreadsDao();
   //$buttonsDao = new ButtonsDao();
-  $velcroDao = new VelcroDao();
-  $velcroByName=$velcroDao->get_velcro_by_name('Najteks');
-  print_r($velcroByName);
+  $zippersDao = new ZippersDao();
+  $zippers=$zippersDao->get_all_zippers();
+  print_r($zippers);
 
   //$threads=$threadsDao->get_all_threads();
   //print_r($threads);
