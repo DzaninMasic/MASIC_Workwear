@@ -1,6 +1,13 @@
 {
     "require": {
+<<<<<<< HEAD
         "mikecao/flight": "^2.0",
         "firebase/php-jwt": "^6.1"
+=======
+        "mikecao/flight": "^2.0"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.6"
+>>>>>>> cc367beb6aaa8a121a25ad790f9e664aa4edd5be
     }
 }

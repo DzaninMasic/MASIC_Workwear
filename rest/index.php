@@ -3,6 +3,7 @@
   ini_set('display_startup_errors', 1);
   error_reporting(E_ALL);
 
+<<<<<<< HEAD:rest/services/index.php
   use Firebase\JWT\JWT;
   use Firebase\JWT\key;
 
@@ -40,6 +41,36 @@ if (@!$headers['Authorization']){
     return FALSE;
   }
 }
+=======
+require_once 'C:\Bitnami\wampstack-8.1.3-0\apache2\htdocs\MASIC_Workwear\vendor\autoload.php';
+require_once 'C:\Bitnami\wampstack-8.1.3-0\apache2\htdocs\MASIC_Workwear\rest\dao\ProjectDao.class.php';
+Flight::register('projectDao', 'ProjectDao');
+Flight::route('/print', function(){
+  echo "This is Dzanin \n";
+});
+//GET ALL
+Flight::route('GET /material', function(){
+Flight::json(Flight::projectDao()->get_all());
+});
+//GET INDIVIDUAL BY NAME
+Flight::route('GET /material/@id', function($id){
+  Flight::json(Flight::projectDao()->get_by_id($id));
+});
+//ADD
+Flight::route('POST /material', function(){
+  Flight::json(Flight::projectDao()->add(Flight::request()->data->getData()));
+});
+//UPDATE
+Flight::route('PUT /material/@id', function($id){
+  $data = Flight::request()->data->getData();
+  $data['id'] = $id;
+  Flight::json(Flight::projectDao()->update($data));
+});
+//DELETE
+Flight::route('DELETE /material/@id', function($id){
+  Flight::projectDao()->delete($id);
+  Flight::json(["message" => "deleted"]);
+>>>>>>> cc367beb6aaa8a121a25ad790f9e664aa4edd5be:rest/index.php
 });
 
   require_once 'C:\Bitnami\wampstack-8.1.3-0\apache2\htdocs\MASIC_Workwear\rest\routes\ColorRoutes.php';
