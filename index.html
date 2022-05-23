@@ -49,7 +49,7 @@
     <div class="container marketing" style="margin-top:50px;">
       <div id="material-list" class="row">
         <div class="d-flex justify-content-center">
-          <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;" role="status">
+          <div class="spinner-border text-primary" style="width: 5rem; height: 5rem; margin-top:100px" role="status">
             <span class="sr-only"></span>
           </div>
         </div>
@@ -190,7 +190,7 @@
 <script>
   let options="";
   $.ajax({
-    url: 'rest/services/material/'+$('#id').val(),
+    url: 'rest/services/colors/'+$('#id').val(),
     type: "GET",
     beforeSend: function(xhr){
       xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
@@ -202,12 +202,6 @@
       document.getElementById("select-color").innerHTML=options;
     },
   });
-/*  $.get("rest/services/colors/", function( data ){
-    for(let i=0;i<data.length;i++){
-      options+=`<option value="${data[i].id}">${data[i].name}</option>`
-    }
-    document.getElementById("select-color").innerHTML=options;
-  });*/
 </script>
 
 <script>
@@ -243,23 +237,48 @@
   function showModalDelete(id){
     $('.material-button').attr('disabled', true);
     $('.material-button-delete').attr('disabled', true);
-    $.get("rest/services/material/"+id,function(data){
-      console.log(data);
-      $("#name-delete-modal").val(data.name);
-      $("#id-delete-modal").val(data.id);
-      $("#color-delete-modal").val(data.color);
-      $("#length-delete-modal").val(data.length);
-      $("#available-delete-modal").val(data.available);
-      $("#exampleModal2").modal("show");
-      $('.material-button').attr('disabled', false);
-      $('.material-button-delete').attr('disabled', false);
+    $.ajax({
+      url: 'rest/services/material/'+id,
+      type: "GET",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
+      success: function(data){
+        console.log(data);
+        $("#name-delete-modal").val(data.name);
+        $("#id-delete-modal").val(data.id);
+        $("#color-delete-modal").val(data.color);
+        $("#length-delete-modal").val(data.length);
+        $("#available-delete-modal").val(data.available);
+        $("#exampleModal2").modal("show");
+        $('.material-button').attr('disabled', false);
+        $('.material-button-delete').attr('disabled', false);
+      },
     });
   }
   //ADD NEW ITEM MODAL
   function showModalAdd(){
     $('.material-button').attr('disabled', true);
     $('.material-button-delete').attr('disabled', true);
-    $.get("rest/services/material/"+id,function(data){
+    $.ajax({
+      url: 'rest/services/material/'+id,
+      type: "GET",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
+      success: function(data){
+        console.log(data);
+        $("#name-add-modal").val(data.name);
+        $("#color-add-modal").val(data.color);
+        $("#length-add-modal").val(data.length);
+        $("#available-add-modal").val(data.available);
+        //$("#select-color option:selected").val(data.color_id);
+        $("#exampleModal3").modal("show");
+        $('.material-button').attr('disabled', false);
+        $('.material-button-delete').attr('disabled', false);
+      },
+    });
+    /*$.get("rest/services/material/"+id,function(data){
       $("#name-add-modal").val(data.name);
       $("#color-add-modal").val(data.color);
       $("#length-add-modal").val(data.length);
@@ -268,7 +287,7 @@
       $("#exampleModal3").modal("show");
       $('.material-button').attr('disabled', false);
       $('.material-button-delete').attr('disabled', false);
-    });
+    });*/
   }
   //OLD AND UNUSED THINGS (ready to be deleted)
   /*function saveMaterial(){

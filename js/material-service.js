@@ -50,17 +50,24 @@ var MaterialService = {
   get: function(id){
     $('.material-button').attr('disabled', true);
     $('.material-button-delete').attr('disabled', true);
-    $.get("rest/services/material/"+id,function(data){
-      console.log(data);
-      $("#name").val(data.name);
-      $("#id").val(data.id);
-      //$("#color").val(data.color);
-      $("#length").val(data.length);
-      $("#available").val(data.available);
-      $("#color_id").val(data.color_name);
-      $("#exampleModal").modal("show");
-      $('.material-button').attr('disabled', false);
-      $('.material-button-delete').attr('disabled', false);
+    $.ajax({
+      url: 'rest/services/material/'+id,
+      type: "GET",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
+      success: function(data){
+        console.log(data);
+        $("#name").val(data.name);
+        $("#id").val(data.id);
+        //$("#color").val(data.color);
+        $("#length").val(data.length);
+        $("#available").val(data.available);
+        $("#color_id").val(data.color_name);
+        $("#exampleModal").modal("show");
+        $('.material-button').attr('disabled', false);
+        $('.material-button-delete').attr('disabled', false);
+      },
     });
   },
 
@@ -80,6 +87,9 @@ var MaterialService = {
       data: JSON.stringify(material),
       contentType: 'application/json',
       dataType: "json",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
       success: function(result){
         toastr.success("Material updated!");
         $("#exampleModal").modal("hide");
@@ -96,11 +106,14 @@ var MaterialService = {
     console.log("testbest",temp);
 
     $.ajax({
-      url: 'rest/services/material/'+$('#id').val(),
+      url: 'rest/services/material',
       type: 'POST',
       data: JSON.stringify({...material,color_id:temp}),
       contentType: 'application/json',
       dataType: "json",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
       success: function(result){
         toastr.success("Material added!");
         $("#exampleModal3").modal("hide");
@@ -118,6 +131,9 @@ var MaterialService = {
       type: 'DELETE',
       contentType: 'application/json',
       dataType: "json",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
       success: function(result){
         toastr.success("Material deleted!");
         $("#exampleModal2").modal("hide");
