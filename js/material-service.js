@@ -50,25 +50,40 @@ var MaterialService = {
   get: function(id){
     $('.material-button').attr('disabled', true);
     $('.material-button-delete').attr('disabled', true);
+    let options="";
     $.ajax({
-      url: 'rest/services/material/'+id,
+      url: 'rest/services/colors/',
       type: "GET",
       beforeSend: function(xhr){
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
       },
       success: function(data){
-        console.log(data);
-        $("#name").val(data.name);
-        $("#id").val(data.id);
-        //$("#color").val(data.color);
-        $("#length").val(data.length);
-        $("#available").val(data.available);
-        $("#color_id").val(data.color_name);
-        $("#exampleModal").modal("show");
-        $('.material-button').attr('disabled', false);
-        $('.material-button-delete').attr('disabled', false);
+        for(let i=0;i<data.length;i++){
+          options+=`<option value="${data[i].id}">${data[i].name}</option>`
+        }
+        document.getElementById("color_id").innerHTML=options;
+        $.ajax({
+          url: 'rest/services/material/'+id,
+          type: "GET",
+          beforeSend: function(xhr){
+            xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+          },
+          success: function(data){
+            console.log(data);
+            $("#name").val(data.name);
+            $("#id").val(data.id);
+            //$("#color").val(data.color);
+            $("#length").val(data.length);
+            $("#available").val(data.available);
+            $('#color_id option[value="'+data.color_id+'"]').prop('selected', true)
+            $("#exampleModal").modal("show");
+            $('.material-button').attr('disabled', false);
+            $('.material-button-delete').attr('disabled', false);
+          },
+        });
       },
     });
+
   },
 
   update: function(){
@@ -120,6 +135,9 @@ var MaterialService = {
         $("#material-list").html('<div class="d-flex justify-content-center"><div class="spinner-border text-primary" style="width : 5rem ; height : 5rem;" role="status"> <span class="sr-only"></span>  </div></div>');
         //console.log(data);
         MaterialService.list();
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        toastr.error(XMLHttpRequest.responseJSON.message);
       }
     });
   },

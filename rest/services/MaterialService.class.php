@@ -4,6 +4,21 @@
 
   class MaterialService extends BaseService{
 
+    public function add($entity){
+      try {
+        return $this->dao->add($entity);
+      } catch (\Exception $e) {
+        if (str_contains($e->getMessage(), 'SQLSTATE[23000]')) {
+            throw new Exception('Material with the same name and color exists.');
+        }
+        else {
+          throw $e;
+        }
+      }
+
+      //return $this->dao->add($entity);
+    }
+
     public function __construct(){
       parent::__construct(new ProjectDao());
     }

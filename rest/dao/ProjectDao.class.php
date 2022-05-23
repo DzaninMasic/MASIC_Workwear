@@ -10,7 +10,7 @@ class ProjectDao extends BaseDao{
   }
 
   public function get_by_color_route($id){
-    $stmt = $this->conn->prepare("SELECT material.id, material.name, material.length, material.available, colors.name as color_name
+    $stmt = $this->conn->prepare("SELECT material.id, material.name, material.length, material.available,material.color_id, colors.name as color_name
       FROM material
       LEFT JOIN colors
       ON material.color_id = colors.id
