@@ -44,7 +44,7 @@
     </div>
   </nav>
 </header>
-<body>
+<body style="background-color:pink;">
   <main>
     <div class="container marketing" style="margin-top:50px;">
       <div id="material-list" class="row">
@@ -81,12 +81,15 @@
           <input name="id" id="id" type="text" class="form-control required" placeholder="Enter ID">
         </div>
         <div class="form-group">
-          <label>Name</label>
-          <input name="name" id="name" type="text" class="form-control required" placeholder="Enter name">
+          <label>Type</label>
+          <select name="type_id" id="type_id" type="text" class="form-control required" placeholder="Enter type_id">
+
+          </select>
         </div>
         <div class="form-group">
           <label>Color</label>
           <select name="color_id" id="color_id" type="text" class="form-control required" placeholder="Enter color_id">
+
           </select>
         </div>
         <!--<div class="form-group">
@@ -120,23 +123,23 @@
       <div class="modal-body">
         <div class="form-group">
           <label>ID</label>
-          <input name="id" id="id-delete-modal" type="text" class="form-control required" placeholder="Enter ID">
+          <input readonly name="id" id="id-delete-modal" type="text" class="form-control required" placeholder="Enter ID">
         </div>
         <div class="form-group">
-          <label>Name</label>
-          <input name="name" id="name-delete-modal" type="text" class="form-control required" placeholder="Enter name">
+          <label>Type</label>
+          <input readonly name="type" id="type-delete-modal" type="text" class="form-control required" placeholder="Enter name">
         </div>
         <div class="form-group">
           <label>Color</label>
-          <input name="color" id="color-delete-modal" type="text" class="form-control required" placeholder="Enter color">
+          <input readonly name="color" id="color-delete-modal" type="text" class="form-control required" placeholder="Enter color">
         </div>
         <div class="form-group">
           <label>Length</label>
-          <input name="length" id="length-delete-modal" type="number" class="form-control required" placeholder="Enter length">
+          <input readonly name="length" id="length-delete-modal" type="number" class="form-control required" placeholder="Enter length">
         </div>
         <div class="form-group">
           <label>Available</label>
-          <input name="available" id="available-delete-modal" type="text" class="form-control required" placeholder="Enter availability">
+          <input readonly name="available" id="available-delete-modal" type="text" class="form-control required" placeholder="Enter availability">
         </div>
       </div>
       <div class="modal-footer">
@@ -157,9 +160,15 @@
       </div>
       <div class="modal-body">
           <div class="form-group">
-            <label>Name</label>
-            <input name="name" id="name-add-modal" type="text" class="form-control required" placeholder="Enter name">
+            <label>Type</label>
+            <select class="form-select" id="select-type">
+
+            </select>
           </div>
+          <!--<div class="form-group">
+            <label>Type</label>
+            <input name="name" id="name-add-modal" type="text" class="form-control required" placeholder="Enter name">
+          </div>-->
           <!--<div class="form-group">
             <label>Color</label>
             <input name="color" id="color-add-modal" type="text" class="form-control required" placeholder="Enter color">
@@ -188,21 +197,37 @@
     </div>
   </div>
 </div>
+
 <script>
-  let options="";
-  $.ajax({
-    url: 'rest/services/colors/'+$('#id').val(),
-    type: "GET",
-    beforeSend: function(xhr){
-      xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
-    },
-    success: function(data){
-      for(let i=0;i<data.length;i++){
-        options+=`<option value="${data[i].id}">${data[i].name}</option>`
-      }
-      document.getElementById("select-color").innerHTML=options;
-    },
-  });
+    let options2="";
+    $.ajax({
+      url: 'rest/services/types/'+$('#id').val(),
+      type: "GET",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
+      success: function(data){
+        for(let i=0;i<data.length;i++){
+          options2+=`<option value="${data[i].id}">${data[i].name}</option>`
+        }
+        document.getElementById("select-type").innerHTML=options2;
+      },
+    });
+
+    let options="";
+    $.ajax({
+      url: 'rest/services/colors/'+$('#id').val(),
+      type: "GET",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
+      success: function(data){
+        for(let i=0;i<data.length;i++){
+          options+=`<option value="${data[i].id}">${data[i].name}</option>`
+        }
+        document.getElementById("select-color").innerHTML=options;
+      },
+    });
 </script>
 
 <script>
@@ -235,6 +260,7 @@
   }*/
 //OLD STUFF AND MODALS
   //DELETE ITEM MODAL
+
   function showModalDelete(id){
     $('.material-button').attr('disabled', true);
     $('.material-button-delete').attr('disabled', true);
@@ -246,9 +272,10 @@
       },
       success: function(data){
         console.log(data);
-        $("#name-delete-modal").val(data.name);
+        $("#type-delete-modal").val(data.type_name);
         $("#id-delete-modal").val(data.id);
-        $("#color-delete-modal").val(data.color);
+        //$("#color-delete-modal").val(data.color);
+        $("#color-delete-modal").val(data.color_name);
         $("#length-delete-modal").val(data.length);
         $("#available-delete-modal").val(data.available);
         $("#exampleModal2").modal("show");
@@ -269,11 +296,9 @@
       },
       success: function(data){
         console.log(data);
-        $("#name-add-modal").val(data.name);
-        $("#color-add-modal").val(data.color);
+        //$("#name-add-modal").val(data.name);
         $("#length-add-modal").val(data.length);
         $("#available-add-modal").val(data.available);
-        //$("#select-color option:selected").val(data.color_id);
         $("#exampleModal3").modal("show");
         $('.material-button').attr('disabled', false);
         $('.material-button-delete').attr('disabled', false);

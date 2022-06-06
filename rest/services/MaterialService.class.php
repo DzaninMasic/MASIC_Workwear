@@ -26,5 +26,9 @@
     public function get_by_color_route($id){
       return $this->dao->get_by_color_route($id);
     }
+
+    public function get_all_updated(){
+      return $this->dao->get_all_updated();
+    }
   }
 ?>

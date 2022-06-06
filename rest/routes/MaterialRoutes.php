@@ -5,8 +5,11 @@
   });
   //GET ALL
   Flight::route('GET /material', function(){
-  Flight::json(Flight::materialService()->get_all());
+  Flight::json(Flight::materialService()->get_all_updated());
   });
+  /*Flight::route('GET /material', function(){
+  Flight::json(Flight::materialService()->get_all());
+  });*/
   //GET INDIVIDUAL BY NAME
   /*Flight::route('GET /material/@id', function($id){
     Flight::json(Flight::materialService()->get_by_id($id));
