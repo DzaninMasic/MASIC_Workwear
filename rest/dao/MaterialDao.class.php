@@ -2,7 +2,7 @@
 
 require_once __DIR__.'/BaseDao.class.php';
 
-class ProjectDao extends BaseDao{
+class MaterialDao extends BaseDao{
 
   //CONSTRUCTOR
   public function __construct(){
