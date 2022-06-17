@@ -201,7 +201,7 @@
 <script>
     let options2="";
     $.ajax({
-      url: 'rest/services/types/'+$('#id').val(),
+      url: 'rest/types/'+$('#id').val(),
       type: "GET",
       beforeSend: function(xhr){
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
@@ -216,7 +216,7 @@
 
     let options="";
     $.ajax({
-      url: 'rest/services/colors/'+$('#id').val(),
+      url: 'rest/colors/'+$('#id').val(),
       type: "GET",
       beforeSend: function(xhr){
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
