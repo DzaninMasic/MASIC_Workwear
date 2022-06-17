@@ -11,7 +11,7 @@ var MaterialService = {
 
   list: function(){
     $.ajax({
-      url: "rest/services/material",
+      url: "rest/material",
       type: "GET",
       beforeSend: function(xhr){
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
@@ -52,7 +52,7 @@ var MaterialService = {
     let options="";
     let options2="";
     $.ajax({
-      url: 'rest/services/colors/',
+      url: 'rest/colors/',
       type: "GET",
       beforeSend: function(xhr){
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
@@ -63,7 +63,7 @@ var MaterialService = {
         }
         document.getElementById("color_id").innerHTML=options;
         $.ajax({
-          url: 'rest/services/types/',
+          url: 'rest/types/',
           type: "GET",
           beforeSend: function(xhr){
             xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
@@ -74,7 +74,7 @@ var MaterialService = {
             }
             document.getElementById("type_id").innerHTML=options2;
             $.ajax({
-              url: 'rest/services/material/'+id,
+              url: 'rest/material/'+id,
               type: "GET",
               beforeSend: function(xhr){
                 xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
@@ -106,7 +106,7 @@ var MaterialService = {
     material.available=$('#available').val();
 
     $.ajax({
-      url: 'rest/services/material/'+$('#id').val(),
+      url: 'rest/material/'+$('#id').val(),
       type: 'PUT',
       data: JSON.stringify(material),
       contentType: 'application/json',
@@ -132,7 +132,7 @@ var MaterialService = {
     console.log("testbest2",temp2);
 
     $.ajax({
-      url: 'rest/services/material',
+      url: 'rest/material',
       type: 'POST',
       data: JSON.stringify({...material,color_id:temp,type_id:temp2}),
       contentType: 'application/json',
@@ -156,7 +156,7 @@ var MaterialService = {
     $('.delete-material-button').attr('disabled', true);
 
     $.ajax({
-      url: 'rest/services/material/'+$('#id-delete-modal').val(),
+      url: 'rest/material/'+$('#id-delete-modal').val(),
       type: 'DELETE',
       contentType: 'application/json',
       dataType: "json",

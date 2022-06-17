@@ -16,7 +16,7 @@ var AdminService = {
 
   login: function(login){
     $.ajax({
-      url: 'rest/services/login',
+      url: 'rest/login',
       type: 'POST',
       data: JSON.stringify(login),
       contentType: 'application/json',
