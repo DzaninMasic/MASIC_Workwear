@@ -1,5 +1,5 @@
 <?php
-  require_once 'C:\xampp\htdocs\MASIC_Workwear\rest\Config.class.php';
+  require_once '.\Config.class.php';
   use Firebase\JWT\JWT;
   use Firebase\JWT\Key;
 

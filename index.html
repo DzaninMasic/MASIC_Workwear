@@ -265,7 +265,7 @@
     $('.material-button').attr('disabled', true);
     $('.material-button-delete').attr('disabled', true);
     $.ajax({
-      url: 'rest/services/material/'+id,
+      url: 'rest/material/'+id,
       type: "GET",
       beforeSend: function(xhr){
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
@@ -289,7 +289,7 @@
     $('.material-button').attr('disabled', true);
     $('.material-button-delete').attr('disabled', true);
     $.ajax({
-      url: 'rest/services/material/'+id,
+      url: 'rest/material/'+id,
       type: "GET",
       beforeSend: function(xhr){
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
