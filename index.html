@@ -33,7 +33,7 @@
             <a class="nav-link" href="#">Link</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            <button class="btn btn-outline-success color-button-add" data-bs-toggle="modal" data-bs-target="#exampleModal4">Add colors</button>
           </li>
         </ul>
         <form class="d-flex">
@@ -65,6 +65,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="js/material-service.js"></script>
 <script src="js/admin-service.js"></script>
+<script src="js/color-service.js"></script>
 <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 
 <!-- MODAL FOR UPDATING-->
@@ -165,14 +166,6 @@
 
             </select>
           </div>
-          <!--<div class="form-group">
-            <label>Type</label>
-            <input name="name" id="name-add-modal" type="text" class="form-control required" placeholder="Enter name">
-          </div>-->
-          <!--<div class="form-group">
-            <label>Color</label>
-            <input name="color" id="color-add-modal" type="text" class="form-control required" placeholder="Enter color">
-          </div>-->
           <div class="form-group">
             <label>Color</label>
             <select class="form-select" aria-label="Default select example" id="select-color">
@@ -197,6 +190,33 @@
     </div>
   </div>
 </div>
+<!--MODAL FOF ADDING NEW COLOR-->
+<div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="addColorForm">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add color</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <label>Color name</label>
+            <input name="color-name" id="color-add-modal" type="text" class="form-control required" placeholder="Enter color name">
+          </div>
+          <div class="form-group">
+            <p style="color: rgba(0, 0, 0, 0.5);">*Please make sure the first letter of the color is an uppercase letter.</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Add color</button>
+        </div>
+    </form>
+    </div>
+  </div>
+</div>
+
 
 <script>
     let options2="";
@@ -236,31 +256,11 @@
 
   if(token){
     MaterialService.init();
+    ColorService.init();
   }else{
     window.location.replace("login.html");
   }
-
-  //document.getElementById("dropdownMenuButton1").addEventListener("click", function(event){
-  //event.preventDefault()
-
-
-  /*function showColors(){
-    //alert("Hello");
-    $.get("rest/services/colors/", function( data ){
-
-      var html="";
-      for(let i=0;i<data.length;i++){
-        html+=`<option value="${data[i].id}">${data[i].name}</option>`
-      }
-      $("#select-color").html(html);
-    });
-  }
-  function pickColor(color){
-    console.log("Tu sam");
-  }*/
-//OLD STUFF AND MODALS
   //DELETE ITEM MODAL
-
   function showModalDelete(id){
     $('.material-button').attr('disabled', true);
     $('.material-button-delete').attr('disabled', true);
@@ -304,101 +304,27 @@
         $('.material-button-delete').attr('disabled', false);
       },
     });
-    /*$.get("rest/services/material/"+id,function(data){
-      $("#name-add-modal").val(data.name);
-      $("#color-add-modal").val(data.color);
-      $("#length-add-modal").val(data.length);
-      $("#available-add-modal").val(data.available);
-      //$("#select-color option:selected").val(data.color_id);
-      $("#exampleModal3").modal("show");
-      $('.material-button').attr('disabled', false);
-      $('.material-button-delete').attr('disabled', false);
-    });*/
   }
-  //OLD AND UNUSED THINGS (ready to be deleted)
-  /*function saveMaterial(){
-    $('.save-material-button').attr('disabled', true);
-    var material={};
-    //material.id=$('#id').val();
-    material.name=$('#name').val();
-    material.color=$('#color').val();
-    material.length=$('#length').val();
-    material.available=$('#available').val();
-
-    $.ajax({
-      url: 'rest/services/material/'+$('#id').val(),
-      type: 'PUT',
-      data: JSON.stringify(material),
-      contentType: 'application/json',
-      dataType: "json",
-      success: function(result){
-        $("#exampleModal").modal("hide");
-        $('.save-material-button').attr('disabled', false);
-        $("#material-list").html('<div class="d-flex justify-content-center"><div class="spinner-border text-primary" style="width : 5rem ; height : 5rem;" role="status"> <span class="sr-only"></span>  </div></div>');
-        getMaterial();
-      }
-    });
-  }*/
-  /*function deleteMaterial(){
-    $('.delete-material-button').attr('disabled', true);
-
-    $.ajax({
-      url: 'rest/services/material/'+$('#id-delete-modal').val(),
-      type: 'DELETE',
-      contentType: 'application/json',
-      dataType: "json",
-      success: function(result){
-        $("#exampleModal2").modal("hide");
-        $('.delete-material-button').attr('disabled', false);
-        $("#material-list").html('<div class="d-flex justify-content-center"><div class="spinner-border text-primary" style="width : 5rem ; height : 5rem;" role="status"> <span class="sr-only"></span>  </div></div>');
-        getMaterial();
-      }
-    });
-  }*/
-  /*function addMaterial(){
-    //$('.delete-material-button').attr('disabled', true);
-    var material={};
-
-    material.name=$('#name-add-modal').val();
-    material.color=$('#color-add-modal').val();
-    material.length=$('#length-add-modal').val();
-    material.available=$('#available-add-modal').val();
-
-    $.ajax({
-      url: 'rest/services/material/'+$('#id').val(),
-      type: 'POST',
-      data: JSON.stringify(material),
-      contentType: 'application/json',
-      dataType: "json",
-      success: function(result){
-        $("#exampleModal3").modal("hide");
-        $("#material-list").html('<div class="d-flex justify-content-center"><div class="spinner-border text-primary" style="width : 5rem ; height : 5rem;" role="status"> <span class="sr-only"></span>  </div></div>');
-        //console.log(data);
-        getMaterial();
-      }
-    });
-  }*/
-  /*getMaterial();
-
-  function getMaterial(){
-
-  }*/
-  //SHOW MODAL
-  /*function showModal(id){
+  //ADD NEW COLOR MODAL
+  function showModalColorAdd(){
+    $('.color-button-add').attr('disabled', true);
     $('.material-button').attr('disabled', true);
     $('.material-button-delete').attr('disabled', true);
-    $.get("rest/services/material/"+id,function(data){
-      console.log(data);
-      $("#name").val(data.name);
-      $("#id").val(data.id);
-      $("#color").val(data.color);
-      $("#length").val(data.length);
-      $("#available").val(data.available);
-      $("#exampleModal").modal("show");
-      $('.material-button').attr('disabled', false);
-      $('.material-button-delete').attr('disabled', false);
+    $.ajax({
+      url: 'rest/colors/'+id,
+      type: "GET",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
+      success: function(data){
+        console.log(data);
+        $("#exampleModal4").modal("show");
+        $('.material-button').attr('disabled', false);
+        $('.material-button-delete').attr('disabled', false);
+        $('.color-button-add').attr('disabled', false);
+      },
     });
-  }*/
+  }
 </script>
 
 </html>
