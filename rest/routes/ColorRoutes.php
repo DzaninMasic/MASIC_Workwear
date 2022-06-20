@@ -2,6 +2,20 @@
   Flight::route('/print2', function(){
     echo "This is Dzanin 2 \n";
   });
+
+  /**
+ * @OA\Get(
+ *      path="/colors/",
+ *      tags={"colors"},
+ *      summary="Returns all colors from the api. ",
+ *      security = {{"ApiKeyAuth": {}}},
+ *      @OA\Response(
+ *          response=200,
+ *          description="List of colors"
+ *      )
+ * )
+ */
+
   //GET ALL
   Flight::route('GET /colors', function(){
   Flight::json(Flight::colorsService()->get_all());

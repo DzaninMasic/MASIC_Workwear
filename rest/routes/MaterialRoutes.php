@@ -3,10 +3,33 @@
   Flight::route('/print', function(){
     echo "This is Dzanin \n";
   });
+
+  /**
+ * @OA\Get(
+ *      path="/material/",
+ *      tags={"material"},
+ *      summary="Returns all materials from the api. ",
+ *      security = {{"ApiKeyAuth": {}}},
+ *      @OA\Response(
+ *          response=200,
+ *          description="List of materials"
+ *      )
+ * )
+ */
+
   //GET ALL
   Flight::route('GET /material', function(){
   Flight::json(Flight::materialService()->get_all_updated());
   });
+
+  /**
+ * @OA\Get(path="/material/{id}", tags={"material"}, security={{"ApiKeyAuth": {}}},
+ *     @OA\Parameter(in="path", name="id", example=1, description="Id of material"),
+ *     @OA\Response(response="200", description="Fetch individual material")
+ * )
+ */
+
+
   /*Flight::route('GET /material', function(){
   Flight::json(Flight::materialService()->get_all());
   });*/
@@ -18,6 +41,7 @@
   Flight::route('GET /material/@id', function($id){
     Flight::json(Flight::materialService()->get_by_color_route($id));
   });
+
   //GET INDIVIDUAL BY COLOR
   Flight::route('GET /material/@id/colors', function($id){
     Flight::json(Flight::colorsService()->get_material_by_color_id($id));
