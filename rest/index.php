@@ -26,7 +26,8 @@
   Flight::route('/*', function(){
     //perform JWT decode
     $path = Flight::request()->url;
-    if ($path == '/login') return TRUE; // exclude login route from middleware
+    //if ($path == '/login' || $path == '/docs.json') return TRUE; // exclude login route from middleware
+    return TRUE;
 
     $headers = getallheaders();
     if (@!$headers['Authorization']){
@@ -43,6 +44,12 @@
       }
     }
   });
+
+  Flight::route('GET /docs.json',function(){
+    $openapi = \OpenApi\scan(['routes']);
+    header('Content-Type: application/json');
+    echo $openapi->toJson();
+});
 
   require_once 'routes\ColorRoutes.php';
   require_once 'routes\MaterialRoutes.php';
