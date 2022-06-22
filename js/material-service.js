@@ -25,8 +25,10 @@ var MaterialService = {
               <div class="card">
                 <div class="card-body">
                   <h5 class="card-title" style="padding:50px; background-color:`+data[i].color_name+`;color:white;text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; text-align:center">`+ data[i].type_name +`</h5>
-                  <p class="card-text">`+ data[i].available +`: Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                   <p>
+                    <p style="margin-bottom:0px">Brand: `+ data[i].brand_name +`</p>
+                    <p style="margin-bottom:0px">Length: `+ data[i].length +`</p>
+                    <p>Available: `+ data[i].available +`</p>
                     <button type="button" class="btn btn-primary material-button" onclick="MaterialService.get(`+data[i].id+`)">
                       Edit material
                     </button>
@@ -111,25 +113,6 @@ var MaterialService = {
       },
     });
   },
-
-/*  $.ajax({
-    url: 'rest/material/'+id,
-    type: "GET",
-    beforeSend: function(xhr){
-      xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
-    },
-    success: function(data){
-      console.log(data);
-      $('#type_id option[value="'+data.type_id+'"]').prop('selected', true);
-      $("#id").val(data.id);
-      $("#length").val(data.length);
-      $("#available").val(data.available);
-      $('#color_id option[value="'+data.color_id+'"]').prop('selected', true);
-      $("#exampleModal").modal("show");
-      $('.material-button').attr('disabled', false);
-      $('.material-button-delete').attr('disabled', false);
-    },
-  });*/
 
   update: function(){
     $('.save-material-button').attr('disabled', true);

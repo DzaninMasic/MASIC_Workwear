@@ -25,11 +25,12 @@ class MaterialDao extends BaseDao{
   }
 
   public function get_all_updated(){
-    $stmt = $this->conn->prepare("SELECT material.id, types.name as type_name, material.length, material.available, colors.name as color_name
+    $stmt = $this->conn->prepare("SELECT material.id, brands.name as brand_name, types.name as type_name, material.length, material.available, colors.name as color_name
       FROM material
       LEFT JOIN colors
       ON material.color_id = colors.id
       LEFT JOIN types ON material.type_id=types.id
+      LEFT JOIN brands ON material.brand_id=brands.id
       ORDER BY type_name ASC;");
 
     $stmt->execute();
