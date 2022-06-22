@@ -26,8 +26,7 @@
   Flight::route('/*', function(){
     //perform JWT decode
     $path = Flight::request()->url;
-    //if ($path == '/login' || $path == '/docs.json') return TRUE; // exclude login route from middleware
-    return TRUE;
+    if ($path == '/login' || $path == '/docs.json') return TRUE; // exclude login route from middleware
 
     $headers = getallheaders();
     if (@!$headers['Authorization']){
