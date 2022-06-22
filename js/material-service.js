@@ -51,6 +51,7 @@ var MaterialService = {
     $('.material-button-delete').attr('disabled', true);
     let options="";
     let options2="";
+    let options3="";
     $.ajax({
       url: 'rest/colors/',
       type: "GET",
@@ -74,21 +75,35 @@ var MaterialService = {
             }
             document.getElementById("type_id").innerHTML=options2;
             $.ajax({
-              url: 'rest/material/'+id,
+              url: 'rest/brands/',
               type: "GET",
               beforeSend: function(xhr){
                 xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
               },
               success: function(data){
-                console.log(data);
-                $('#type_id option[value="'+data.type_id+'"]').prop('selected', true);
-                $("#id").val(data.id);
-                $("#length").val(data.length);
-                $("#available").val(data.available);
-                $('#color_id option[value="'+data.color_id+'"]').prop('selected', true);
-                $("#exampleModal").modal("show");
-                $('.material-button').attr('disabled', false);
-                $('.material-button-delete').attr('disabled', false);
+                for(let i=0;i<data.length;i++){
+                  options3+=`<option value="${data[i].id}">${data[i].name}</option>`
+                }
+                document.getElementById("brand_id").innerHTML=options3;
+                $.ajax({
+                  url: 'rest/material/'+id,
+                  type: "GET",
+                  beforeSend: function(xhr){
+                    xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+                  },
+                  success: function(data){
+                    console.log(data);
+                    $('#brand_id option[value="'+data.brand_id+'"]').prop('selected', true);
+                    $('#type_id option[value="'+data.type_id+'"]').prop('selected', true);
+                    $("#id").val(data.id);
+                    $("#length").val(data.length);
+                    $("#available").val(data.available);
+                    $('#color_id option[value="'+data.color_id+'"]').prop('selected', true);
+                    $("#exampleModal").modal("show");
+                    $('.material-button').attr('disabled', false);
+                    $('.material-button-delete').attr('disabled', false);
+                  },
+                });
               },
             });
           },
@@ -97,9 +112,29 @@ var MaterialService = {
     });
   },
 
+/*  $.ajax({
+    url: 'rest/material/'+id,
+    type: "GET",
+    beforeSend: function(xhr){
+      xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+    },
+    success: function(data){
+      console.log(data);
+      $('#type_id option[value="'+data.type_id+'"]').prop('selected', true);
+      $("#id").val(data.id);
+      $("#length").val(data.length);
+      $("#available").val(data.available);
+      $('#color_id option[value="'+data.color_id+'"]').prop('selected', true);
+      $("#exampleModal").modal("show");
+      $('.material-button').attr('disabled', false);
+      $('.material-button-delete').attr('disabled', false);
+    },
+  });*/
+
   update: function(){
     $('.save-material-button').attr('disabled', true);
     var material={};
+    material.brand_id=$('#brand_id').val();
     material.type_id=$('#type_id').val();
     material.color_id=$('#color_id').val();
     material.length=$('#length').val();
