@@ -79,7 +79,7 @@
       <div class="modal-body">
         <div class="form-group">
           <label>ID</label>
-          <input name="id" id="id" type="text" class="form-control required" placeholder="Enter ID">
+          <input readonly name="id" id="id" type="text" class="form-control required" placeholder="Enter ID">
         </div>
         <div class="form-group">
           <label>Type</label>
@@ -127,8 +127,12 @@
           <input readonly name="id" id="id-delete-modal" type="text" class="form-control required" placeholder="Enter ID">
         </div>
         <div class="form-group">
+          <label>Brand</label>
+          <input readonly name="brand" id="brand-delete-modal" type="text" class="form-control required" placeholder="Enter brand">
+        </div>
+        <div class="form-group">
           <label>Type</label>
-          <input readonly name="type" id="type-delete-modal" type="text" class="form-control required" placeholder="Enter name">
+          <input readonly name="type" id="type-delete-modal" type="text" class="form-control required" placeholder="Enter type">
         </div>
         <div class="form-group">
           <label>Color</label>
@@ -160,6 +164,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+          <div class="form-group">
+            <label>Brand</label>
+            <select class="form-select" id="select-brand">
+
+            </select>
+          </div>
           <div class="form-group">
             <label>Type</label>
             <select class="form-select" id="select-type">
@@ -219,6 +229,21 @@
 
 
 <script>
+    let options3="";
+    $.ajax({
+      url: 'rest/brands/'+$('#id').val(),
+      type: "GET",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
+      success: function(data){
+        for(let i=0;i<data.length;i++){
+          options3+=`<option value="${data[i].id}">${data[i].name}</option>`
+        }
+        document.getElementById("select-brand").innerHTML=options3;
+      },
+    });
+
     let options2="";
     $.ajax({
       url: 'rest/types/'+$('#id').val(),
@@ -272,6 +297,7 @@
       },
       success: function(data){
         console.log(data);
+        $("#brand-delete-modal").val(data.brand_name);
         $("#type-delete-modal").val(data.type_name);
         $("#id-delete-modal").val(data.id);
         //$("#color-delete-modal").val(data.color);
@@ -285,7 +311,7 @@
     });
   }
   //ADD NEW ITEM MODAL
-  function showModalAdd(){
+  /*function showModalAdd(){
     $('.material-button').attr('disabled', true);
     $('.material-button-delete').attr('disabled', true);
     $.ajax({
@@ -304,7 +330,7 @@
         $('.material-button-delete').attr('disabled', false);
       },
     });
-  }
+  }*/
   //ADD NEW COLOR MODAL
   function showModalColorAdd(){
     $('.color-button-add').attr('disabled', true);

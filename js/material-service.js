@@ -38,7 +38,7 @@ var MaterialService = {
               </div>
             </div>`;
         }
-        html += `<button style="margin: 15px" type="button" class="btn btn-success" onclick="showModalAdd()">
+        html += `<button style="margin: 15px" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal3"">
           Add material
         </button>`;
         $("#material-list").html(html);
@@ -128,13 +128,15 @@ var MaterialService = {
     console.log("Nas log",material);
     let temp=document.getElementById("select-color").value;
     let temp2=document.getElementById("select-type").value;
+    let temp3=document.getElementById("select-brand").value;
     console.log("testbest",temp);
     console.log("testbest2",temp2);
+    console.log("testbest3",temp3);
 
     $.ajax({
       url: 'rest/material',
       type: 'POST',
-      data: JSON.stringify({...material,color_id:temp,type_id:temp2}),
+      data: JSON.stringify({...material,color_id:temp,type_id:temp2,brand_id:temp3}),
       contentType: 'application/json',
       dataType: "json",
       beforeSend: function(xhr){
