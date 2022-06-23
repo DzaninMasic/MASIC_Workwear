@@ -22,6 +22,11 @@
   Flight::json(Flight::materialService()->get_all_updated());
   });
 
+  //GET SEARCHED
+  Flight::route('GET /search/@name', function($name){
+  Flight::json(Flight::materialService()->get_searched($name));
+  });
+
   /**
  * @OA\Get(path="/material/{id}", tags={"material"}, security={{"ApiKeyAuth": {}}},
  *     @OA\Parameter(in="path", name="id", example=1, description="Id of material"),

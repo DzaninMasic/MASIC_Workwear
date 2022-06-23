@@ -30,5 +30,12 @@
     public function get_all_updated(){
       return $this->dao->get_all_updated();
     }
+
+    public function get_searched($name){
+      //$var=$this->dao->get_searched($name);
+      //$var['brand_name']
+
+      return $this->dao->get_searched($name);
+    }
   }
 ?>

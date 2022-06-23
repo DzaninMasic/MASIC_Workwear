@@ -1,3 +1,4 @@
+var html="";
 var MaterialService = {
   init: function(){
     $('#addMaterialForm').validate({
@@ -18,11 +19,56 @@ var MaterialService = {
       },
       success: function(data){
         $("#material-list").html("");
-        var html="";
+        html="";
+        html+=`<div class="form-group" style="padding-top:20px">
+                  Hello
+                </div>`
         for(let i=0;i<data.length;i++){
           html+=`
           <div class="col-lg-3" style="padding:15px">
-              <div class="card">
+              <div class="card" style="border-radius:solid;border-color:black">
+                <div class="card-body">
+                  <h5 class="card-title" style="padding:50px; background-color:`+data[i].color_name+`;color:white;text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; text-align:center">`+ data[i].type_name +`</h5>
+                  <p>
+                    <p style="margin-bottom:0px">Brand: `+ data[i].brand_name +`</p>
+                    <p style="margin-bottom:0px">Length: `+ data[i].length +`</p>
+                    <p>Available: `+ data[i].available +`</p>
+                    <button type="button" class="btn btn-primary material-button" onclick="MaterialService.get(`+data[i].id+`)">
+                      Edit material
+                    </button>
+                    <button type="button" class="btn btn-danger material-button-delete" onclick="showModalDelete(`+data[i].id+`)">
+                      Delete material
+                    </button>
+                  </p>
+                </div>
+              </div>
+            </div>`;
+        }
+        html += `<button style="margin: 15px" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal3"">
+          Add material
+        </button>`;
+        $("#material-list").html(html);
+      },
+    });
+  },
+
+  listSearchedMaterial: function(name){
+    $.ajax({
+      url: "rest/search/"+name,
+      type: "GET",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
+      success: function(data){
+        $("#material-list").html("");
+        html="";
+        for(let i=0;i<data.length;i++){
+          html+=`
+          <div class="col-lg-3" style="padding:15px">
+            <form class="d-flex">
+              <button class="btn btn-warning" type="button" style="margin-bottom:10px" onclick="MaterialService.list()">Reset search</button>
+            </form>
+              <div class="card" style="border-radius:solid;border-color:black">
                 <div class="card-body">
                   <h5 class="card-title" style="padding:50px; background-color:`+data[i].color_name+`;color:white;text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; text-align:center">`+ data[i].type_name +`</h5>
                   <p>

@@ -36,15 +36,24 @@
             <button class="btn btn-outline-success color-button-add" data-bs-toggle="modal" data-bs-target="#exampleModal4">Add colors</button>
           </li>
         </ul>
+        <form method="post">
+          <div style="float:left;">
+            <input type="search" id="search-material" class="form-control" placeholder="Search" aria-label="Search"/>
+          </div>
+          <div style="float:left;">
+            <button id="search-button" type="button" class="btn btn-primary" onclick="getSearchResult()">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </form>
         <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="button" onclick="AdminService.logout()">Logout</button>
+          <button class="btn btn-outline-success" type="button" style="margin-left:20px" onclick="AdminService.logout()">Logout</button>
         </form>
       </div>
     </div>
   </nav>
 </header>
-<body style="background-color:pink;">
+<body style="background-color:grey;">
   <main>
     <div class="container marketing" style="margin-top:50px;">
       <div id="material-list" class="row">
@@ -235,6 +244,12 @@
 
 
 <script>
+
+    function getSearchResult(){
+      var name = document.getElementById("search-material").value;
+      MaterialService.listSearchedMaterial(name);
+    }
+
     let options3="";
     $.ajax({
       url: 'rest/brands/'+$('#id').val(),
