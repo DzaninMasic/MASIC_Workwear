@@ -63,6 +63,16 @@ class MaterialDao extends BaseDao{
       $stmt->execute();
       return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
+
+  public function color_length(){
+    $query="SELECT c.name as color_name, SUM(m.length) as sum_length
+        FROM material m
+        JOIN colors c ON c.id = m.color_id
+        GROUP BY m.color_id;";
+    $stmt = $this->conn->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
 }
 
   //as color_name, colors.id

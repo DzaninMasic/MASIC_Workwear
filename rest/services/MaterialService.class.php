@@ -41,5 +41,9 @@
     public function filter_search($type, $order){
       return $this->dao->filter_search($type, $order);
     }
+
+    public function color_length(){
+      return $this->dao->color_length();
+    }
   }
 ?>

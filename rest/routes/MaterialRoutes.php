@@ -31,6 +31,12 @@
   Flight::route('GET /filter/@type/@order', function($type, $order){
   Flight::json(Flight::materialService()->filter_search($type, $order));
   });
+
+  //SHOW TOTAL LENGTH FOR EACH COLOR
+  Flight::route('GET /length', function(){
+  Flight::json(Flight::materialService()->color_length());
+  });
+  
   /**
  * @OA\Get(path="/material/{id}", tags={"material"}, security={{"ApiKeyAuth": {}}},
  *     @OA\Parameter(in="path", name="id", example=1, description="Id of material"),

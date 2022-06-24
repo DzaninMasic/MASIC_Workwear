@@ -20,10 +20,13 @@ var MaterialService = {
       success: function(data){
         $("#material-list").html("");
         html="";
-        html+=`<div class="dropdown" style="margin-top:20px;">
+        html+=`<div class="dropdown" style="margin-top:20px; float:left;">
                   <button class="btn btn-secondary dropdown-toggle" style=" border-radius:solid; border-color:black;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                   Filter material
                   </button>
+                  <div style="float:right;">
+                    <button type="button" class="btn btn-secondary" style="border-radius:solid; border-color:black" onclick="MaterialService.showColorLength()">Show total length</button>
+                  </div>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   <li><option class="dropdown-item" onclick="MaterialService.fourthOption()">Brand ascending</option></li>
                   <li><option class="dropdown-item" onclick="MaterialService.fifthOption()">Brand descending</option></li>
@@ -32,7 +35,8 @@ var MaterialService = {
                   <li><option class="dropdown-item" onclick="MaterialService.secondOption()">Length ascending</option></li>
                   <li><option class="dropdown-item" onclick="MaterialService.thirdOption()">Length descending</option></li>
                   </ul>
-                </div>`
+                </div>
+                `
         for(let i=0;i<data.length;i++){
           html+=`
           <div class="col-lg-3" style="padding:15px">
@@ -337,5 +341,78 @@ var MaterialService = {
         $("#material-list").html(html);
       },
     });
+  },
+
+  showColorLength: function (){
+    $.ajax({
+      url: "rest/length",
+      type: "GET",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
+      success: function(data){
+        $("#material-list").html("");
+        html="";
+        html+=`<div style="float:left">
+          <form class="d-flex">
+            <button class="btn btn-warning" type="button" style="margin-top:20px;" onclick="MaterialService.list()">Reset search</button>
+          </form>
+        </div>`
+        html+=`
+        <table class="table table-dark table-striped" style="margin-top: 20px">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Color</th>
+            <th scope="col">Length</th>
+          </tr>
+          </thead>
+          <tbody>
+        `;
+        for(let i=0;i<data.length;i++){
+          number=i+1;
+          html+=`
+            <tr>
+              <th scope="row">`+number+`</th>
+              <td>`+data[i].color_name+`</td>
+              <td>`+data[i].sum_length+`</td>
+            </tr>
+          `;
+        }
+        html+=`
+        </tbody>
+        </table>
+        `;
+        $("#material-list").html(html);
+      },
+    });
   }
+
+  /*<thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>*/
 }
