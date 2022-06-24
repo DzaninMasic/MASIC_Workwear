@@ -20,8 +20,15 @@ var MaterialService = {
       success: function(data){
         $("#material-list").html("");
         html="";
-        html+=`<div class="form-group" style="padding-top:20px">
-                  Hello
+        html+=`<div class="dropdown" style="margin-top:20px;">
+                  <button class="btn btn-secondary dropdown-toggle" style=" border-radius:solid; border-color:black;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  Filter material
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><option class="dropdown-item" onclick="MaterialService.firstOption()">Action</option></li>
+                  <li><option class="dropdown-item" onclick="MaterialService.secondOption()">Another action</option></li>
+                  <li><option class="dropdown-item" onclick="MaterialService.thirdOption()">Something else here</option></li>
+                  </ul>
                 </div>`
         for(let i=0;i<data.length;i++){
           html+=`
@@ -62,12 +69,13 @@ var MaterialService = {
       success: function(data){
         $("#material-list").html("");
         html="";
+        html+=`
+        <form class="d-flex">
+          <button class="btn btn-warning" type="button" style="margin-top:20px" onclick="MaterialService.list()">Reset search</button>
+        </form>`;
         for(let i=0;i<data.length;i++){
           html+=`
           <div class="col-lg-3" style="padding:15px">
-            <form class="d-flex">
-              <button class="btn btn-warning" type="button" style="margin-bottom:10px" onclick="MaterialService.list()">Reset search</button>
-            </form>
               <div class="card" style="border-radius:solid;border-color:black">
                 <div class="card-body">
                   <h5 class="card-title" style="padding:50px; background-color:`+data[i].color_name+`;color:white;text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; text-align:center">`+ data[i].type_name +`</h5>
@@ -86,9 +94,6 @@ var MaterialService = {
               </div>
             </div>`;
         }
-        html += `<button style="margin: 15px" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal3"">
-          Add material
-        </button>`;
         $("#material-list").html(html);
       },
     });
@@ -237,5 +242,17 @@ var MaterialService = {
         MaterialService.list();
       }
     });
+  },
+
+  firstOption: function(){
+    
+  },
+
+  secondOption: function(){
+
+  },
+
+  thirdOption: function(){
+
   }
 }
