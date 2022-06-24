@@ -27,6 +27,10 @@
   Flight::json(Flight::materialService()->get_searched($name));
   });
 
+  //FILTER
+  Flight::route('GET /filter/@type/@order', function($type, $order){
+  Flight::json(Flight::materialService()->filter_search($type, $order));
+  });
   /**
  * @OA\Get(path="/material/{id}", tags={"material"}, security={{"ApiKeyAuth": {}}},
  *     @OA\Parameter(in="path", name="id", example=1, description="Id of material"),

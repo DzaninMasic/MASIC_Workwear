@@ -25,9 +25,12 @@ var MaterialService = {
                   Filter material
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><option class="dropdown-item" onclick="MaterialService.firstOption()">Action</option></li>
-                  <li><option class="dropdown-item" onclick="MaterialService.secondOption()">Another action</option></li>
-                  <li><option class="dropdown-item" onclick="MaterialService.thirdOption()">Something else here</option></li>
+                  <li><option class="dropdown-item" onclick="MaterialService.fourthOption()">Brand ascending</option></li>
+                  <li><option class="dropdown-item" onclick="MaterialService.fifthOption()">Brand descending</option></li>
+                  <li><option class="dropdown-item" onclick="MaterialService.firstOption()">Type ascending</option></li>
+                  <li><option class="dropdown-item" onclick="MaterialService.sixthOption()">Type descending</option></li>
+                  <li><option class="dropdown-item" onclick="MaterialService.secondOption()">Length ascending</option></li>
+                  <li><option class="dropdown-item" onclick="MaterialService.thirdOption()">Length descending</option></li>
                   </ul>
                 </div>`
         for(let i=0;i<data.length;i++){
@@ -245,14 +248,94 @@ var MaterialService = {
   },
 
   firstOption: function(){
-    
+    var type="type_name";
+    var order="ASC";
+    MaterialService.executeFilter(type,order);
   },
 
   secondOption: function(){
-
+    var type="material.length";
+    var order="ASC";
+    MaterialService.executeFilter(type,order);
   },
 
   thirdOption: function(){
+    var type="material.length";
+    var order="DESC";
+    MaterialService.executeFilter(type,order);
+  },
 
+  fourthOption: function(){
+    var type="brand_name";
+    var order="ASC";
+    MaterialService.executeFilter(type,order);
+  },
+
+  fifthOption: function(){
+    var type="brand_name";
+    var order="DESC";
+    MaterialService.executeFilter(type,order);
+  },
+
+  sixthOption: function(){
+    var type="type_name";
+    var order="DESC";
+    MaterialService.executeFilter(type,order);
+  },
+
+  executeFilter: function(type, order){
+    $.ajax({
+      url: "rest/filter/"+type+"/"+order,
+      type: "GET",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
+      success: function(data){
+        $("#material-list").html("");
+        html="";
+        html+=`<div style="float:left">
+              <div class="dropdown" style="margin-top:20px; float:left;">
+                  <button class="btn btn-secondary dropdown-toggle" style=" border-radius:solid; border-color:black;" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  Filter material
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><option class="dropdown-item" onclick="MaterialService.fourthOption()">Brand ascending</option></li>
+                  <li><option class="dropdown-item" onclick="MaterialService.fifthOption()">Brand descending</option></li>
+                  <li><option class="dropdown-item" onclick="MaterialService.firstOption()">Type ascending</option></li>
+                  <li><option class="dropdown-item" onclick="MaterialService.sixthOption()">Type descending</option></li>
+                  <li><option class="dropdown-item" onclick="MaterialService.secondOption()">Length ascending</option></li>
+                  <li><option class="dropdown-item" onclick="MaterialService.thirdOption()">Length descending</option></li>
+                  </ul>
+                </div>
+        <div style="float:left">
+          <form class="d-flex">
+            <button class="btn btn-warning" type="button" style="margin-top:20px; margin-left:10px" onclick="MaterialService.list()">Reset search</button>
+          </form>
+        </div>
+        </div>`;
+        for(let i=0;i<data.length;i++){
+          html+=`
+          <div class="col-lg-3" style="padding:15px">
+              <div class="card" style="border-radius:solid;border-color:black">
+                <div class="card-body">
+                  <h5 class="card-title" style="padding:50px; background-color:`+data[i].color_name+`;color:white;text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; text-align:center">`+ data[i].type_name +`</h5>
+                  <p>
+                    <p style="margin-bottom:0px">Brand: `+ data[i].brand_name +`</p>
+                    <p style="margin-bottom:0px">Length: `+ data[i].length +`</p>
+                    <p>Available: `+ data[i].available +`</p>
+                    <button type="button" class="btn btn-primary material-button" onclick="MaterialService.get(`+data[i].id+`)">
+                      Edit material
+                    </button>
+                    <button type="button" class="btn btn-danger material-button-delete" onclick="showModalDelete(`+data[i].id+`)">
+                      Delete material
+                    </button>
+                  </p>
+                </div>
+              </div>
+            </div>`;
+        }
+        $("#material-list").html(html);
+      },
+    });
   }
 }

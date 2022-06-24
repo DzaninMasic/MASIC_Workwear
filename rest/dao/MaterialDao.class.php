@@ -50,6 +50,19 @@ class MaterialDao extends BaseDao{
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
+
+  public function filter_search($type, $order){
+    $query="SELECT material.id, brands.name as brand_name, types.name as type_name, material.length, material.available, colors.name as color_name
+        FROM material
+        LEFT JOIN colors
+        ON material.color_id = colors.id
+        LEFT JOIN types ON material.type_id=types.id
+        LEFT JOIN brands ON material.brand_id=brands.id
+        ORDER BY ".$type." ".$order.";";
+      $stmt = $this->conn->prepare($query);
+      $stmt->execute();
+      return $stmt->fetchAll(PDO::FETCH_ASSOC);
+  }
 }
 
   //as color_name, colors.id

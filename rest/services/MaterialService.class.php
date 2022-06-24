@@ -37,5 +37,9 @@
 
       return $this->dao->get_searched($name);
     }
+
+    public function filter_search($type, $order){
+      return $this->dao->filter_search($type, $order);
+    }
   }
 ?>
