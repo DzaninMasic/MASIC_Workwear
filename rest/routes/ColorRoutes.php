@@ -20,7 +20,15 @@
   Flight::route('GET /colors', function(){
   Flight::json(Flight::colorsService()->get_all());
   });
-  //GET INDIVIDUAL BY NAME
+
+  /**
+ * @OA\Get(path="/colors/{id}", tags={"colors"}, security={{"ApiKeyAuth": {}}},
+ *     @OA\Parameter(in="path", name="id", example=1, description="Id of color"),
+ *     @OA\Response(response="200", description="Fetch individual color")
+ * )
+ */
+  
+  //GET INDIVIDUAL COLOR
   Flight::route('GET /colors/@id', function($id){
     Flight::json(Flight::colorsService()->get_by_id($id));
   });
