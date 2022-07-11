@@ -23,9 +23,9 @@
   Flight::register('typesService', 'TypesService');
   Flight::register('brandsService', 'BrandsService');
 
-  Flight::map('error', function(Exception $ex){
+  /*Flight::map('error', function(Exception $ex){
     Flight::json(['message' => $ex->getMessage()],500);
-  });
+  });*/
   //MIDDLEWARE
   Flight::route('/*', function(){
     //perform JWT decode
