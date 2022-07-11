@@ -7,13 +7,13 @@
   use Firebase\JWT\key;
 
   require_once __DIR__.'/../vendor/autoload.php';
-  require_once 'services\MaterialService.class.php';
-  require_once 'services\ColorsService.class.php';
-  require_once 'services\TypesService.class.php';
-  require_once 'services\BrandsService.class.php';
-  require_once 'dao\AdminsDao.class.php';
-  require_once 'dao\TypesDao.class.php';
-  require_once 'dao\BrandsDao.class.php';
+  require_once __DIR__.'/services/MaterialService.class.php';
+  require_once __DIR__.'/services/ColorsService.class.php';
+  require_once __DIR__.'/services/TypesService.class.php';
+  require_once __DIR__.'/services/BrandsService.class.php';
+  require_once __DIR__.'/dao/AdminsDao.class.php';
+  require_once __DIR__.'/dao/TypesDao.class.php';
+  require_once __DIR__.'/dao/BrandsDao.class.php';
 
   Flight::register('adminsDao', 'AdminsDao');
   Flight::register('brandsDao', 'BrandsDao');
@@ -54,10 +54,10 @@
     echo $openapi->toJson();
 });
 
-  require_once 'routes\ColorRoutes.php';
-  require_once 'routes\MaterialRoutes.php';
-  require_once 'routes\AdminRoutes.php';
-  require_once 'routes\TypeRoutes.php';
-  require_once 'routes\BrandRoutes.php';
+  require_once __DIR__.'/routes/ColorRoutes.php';
+  require_once __DIR__.'/routes/MaterialRoutes.php';
+  require_once __DIR__.'/routes/AdminRoutes.php';
+  require_once __DIR__.'/routes/TypeRoutes.php';
+  require_once __DIR__.'/routes/BrandRoutes.php';
   Flight::start();
 ?>
