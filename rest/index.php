@@ -4,7 +4,7 @@
   error_reporting(E_ALL);
 
   use Firebase\JWT\JWT;
-  use Firebase\JWT\key;
+  use Firebase\JWT\Key;
 
   require_once __DIR__.'/../vendor/autoload.php';
   require_once __DIR__.'/services/MaterialService.class.php';
