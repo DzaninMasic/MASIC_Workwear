@@ -6,7 +6,7 @@
   use Firebase\JWT\JWT;
   use Firebase\JWT\key;
 
-  require_once '..\vendor\autoload.php';
+  require_once __DIR__.'/../vendor/autoload.php';
   require_once 'services\MaterialService.class.php';
   require_once 'services\ColorsService.class.php';
   require_once 'services\TypesService.class.php';
