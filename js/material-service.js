@@ -28,12 +28,12 @@ var MaterialService = {
                     <button type="button" class="btn btn-secondary" style="border-radius:solid; border-color:black" onclick="MaterialService.showColorLength()">Show total length</button>
                   </div>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><option class="dropdown-item" onclick="MaterialService.fourthOption()">Brand ascending</option></li>
-                  <li><option class="dropdown-item" onclick="MaterialService.fifthOption()">Brand descending</option></li>
-                  <li><option class="dropdown-item" onclick="MaterialService.firstOption()">Type ascending</option></li>
-                  <li><option class="dropdown-item" onclick="MaterialService.sixthOption()">Type descending</option></li>
-                  <li><option class="dropdown-item" onclick="MaterialService.secondOption()">Length ascending</option></li>
-                  <li><option class="dropdown-item" onclick="MaterialService.thirdOption()">Length descending</option></li>
+                  <li><option class="dropdown-item" onclick="MaterialService.sortByBrandAscending()">Brand ascending</option></li>
+                  <li><option class="dropdown-item" onclick="MaterialService.sortByBrandDescending()">Brand descending</option></li>
+                  <li><option class="dropdown-item" onclick="MaterialService.sortByTypeAscending()">Type ascending</option></li>
+                  <li><option class="dropdown-item" onclick="MaterialService.sortByTypeDescending()">Type descending</option></li>
+                  <li><option class="dropdown-item" onclick="MaterialService.sortByLengthAscending()">Length ascending</option></li>
+                  <li><option class="dropdown-item" onclick="MaterialService.sortByLengthDescending()">Length descending</option></li>
                   </ul>
                 </div>
                 `
@@ -208,26 +208,48 @@ var MaterialService = {
     console.log("testbest",temp);
     console.log("testbest2",temp2);
     console.log("testbest3",temp3);
-
+    let colorName=$("#select-color").children("option").filter(":selected").text();
+    let typeName=$("#select-type").children("option").filter(":selected").text();
+    let brandName=$("#select-brand").children("option").filter(":selected").text();
     $.ajax({
-      url: 'rest/material',
-      type: 'POST',
-      data: JSON.stringify({...material,color_id:temp,type_id:temp2,brand_id:temp3}),
-      contentType: 'application/json',
-      dataType: "json",
+      url: "rest/material",
+      type: "GET",
       beforeSend: function(xhr){
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
       },
-      success: function(result){
-        toastr.success("Material added!");
-        $("#exampleModal3").modal("hide");
-        $("#material-list").html('<div class="d-flex justify-content-center"><div class="spinner-border text-primary" style="width : 5rem ; height : 5rem;" role="status"> <span class="sr-only"></span>  </div></div>');
-        //console.log(data);
-        MaterialService.list();
+      success: function(data){
+        let isFound=false;
+        for(let i=0;i<data.length;i++){
+
+          if(colorName==data[i].color_name && typeName==data[i].type_name && brandName==data[i].brand_name){
+            toastr.error("Cannot add the same material!");
+            isFound=true;
+            break;
+          }
+        }
+        if(isFound==false){
+          $.ajax({
+            url: 'rest/material',
+            type: 'POST',
+            data: JSON.stringify({...material,color_id:temp,type_id:temp2,brand_id:temp3}),
+            contentType: 'application/json',
+            dataType: "json",
+            beforeSend: function(xhr){
+              xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+            },
+            success: function(result){
+              toastr.success("Material added!");
+              $("#exampleModal3").modal("hide");
+              $("#material-list").html('<div class="d-flex justify-content-center"><div class="spinner-border text-primary" style="width : 5rem ; height : 5rem;" role="status"> <span class="sr-only"></span>  </div></div>');
+              //console.log(data);
+              MaterialService.list();
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+              toastr.error(XMLHttpRequest.responseJSON.message);
+            }
+          });
+        }
       },
-      error: function(XMLHttpRequest, textStatus, errorThrown) {
-        toastr.error(XMLHttpRequest.responseJSON.message);
-      }
     });
   },
   delete: function(id){
@@ -251,37 +273,37 @@ var MaterialService = {
     });
   },
 
-  firstOption: function(){
+  sortByTypeAscending: function(){
     var type="type_name";
     var order="ASC";
     MaterialService.executeFilter(type,order);
   },
 
-  secondOption: function(){
+  sortByLengthAscending: function(){
     var type="material.length";
     var order="ASC";
     MaterialService.executeFilter(type,order);
   },
 
-  thirdOption: function(){
+  sortByLengthDescending: function(){
     var type="material.length";
     var order="DESC";
     MaterialService.executeFilter(type,order);
   },
 
-  fourthOption: function(){
+  sortByBrandAscending: function(){
     var type="brand_name";
     var order="ASC";
     MaterialService.executeFilter(type,order);
   },
 
-  fifthOption: function(){
+  sortByBrandDescending: function(){
     var type="brand_name";
     var order="DESC";
     MaterialService.executeFilter(type,order);
   },
 
-  sixthOption: function(){
+  sortByTypeDescending: function(){
     var type="type_name";
     var order="DESC";
     MaterialService.executeFilter(type,order);
@@ -344,6 +366,16 @@ var MaterialService = {
   },
 
   showColorLength: function (){
+    html="";
+    $("#material-list").html("");
+    html+=`
+        <div class="d-flex justify-content-center">
+        <div class="spinner-border text-primary" style="width: 5rem; height: 5rem; margin-top:100px" role="status">
+          <span class="sr-only"></span>
+        </div>
+      </div>
+    `;
+    $("#material-list").html(html);
     $.ajax({
       url: "rest/length",
       type: "GET",
@@ -351,39 +383,43 @@ var MaterialService = {
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
       },
       success: function(data){
-        $("#material-list").html("");
-        html="";
-        html+=`<div style="float:left">
-          <form class="d-flex">
-            <button class="btn btn-warning" type="button" style="margin-top:20px;" onclick="MaterialService.list()">Reset search</button>
-          </form>
-        </div>`
-        html+=`
-        <table class="table table-dark table-striped" style="margin-top: 20px">
-          <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Color</th>
-            <th scope="col">Length</th>
-          </tr>
-          </thead>
-          <tbody>
-        `;
-        for(let i=0;i<data.length;i++){
-          number=i+1;
+        setTimeout(function(){
+          $("#material-list").html("");
+          html="";
+          html+=`<div style="float:left">
+            <form class="d-flex">
+              <button class="btn btn-warning" type="button" style="margin-top:20px;" onclick="MaterialService.list()">Reset search</button>
+            </form>
+          </div>`
           html+=`
+          <table class="table table-dark table-striped" style="margin-top: 20px">
+            <thead>
             <tr>
-              <th scope="row">`+number+`</th>
-              <td>`+data[i].color_name+`</td>
-              <td>`+data[i].sum_length+`</td>
+              <th scope="col">#</th>
+              <th scope="col">Color</th>
+              <th scope="col">Length</th>
             </tr>
+            </thead>
+            <tbody>
           `;
-        }
-        html+=`
-        </tbody>
-        </table>
-        `;
-        $("#material-list").html(html);
+          for(let i=0;i<data.length;i++){
+            number=i+1;
+            html+=`
+              <tr>
+                <th scope="row">`+number+`</th>
+                <td>`+data[i].color_name+`</td>
+                <td>`+data[i].sum_length+`</td>
+              </tr>
+            `;
+          }
+          html+=`
+          </tbody>
+          </table>
+          `;
+          $("#material-list").html(html);
+
+        },600);
+
       },
     });
   }

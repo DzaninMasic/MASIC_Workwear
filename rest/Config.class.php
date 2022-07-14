@@ -2,19 +2,19 @@
 
   class Config{
     public static function DB_HOST(){
-        return Config::get_env("DB_HOST", "sql11.freemysqlhosting.net");
+        return Config::get_env("DB_HOST", "127.0.0.1");
     }
 
     public static function DB_USERNAME(){
-        return Config::get_env("DB_USERNAME", "sql11479687");
+        return Config::get_env("DB_USERNAME", "root");
     }
 
     public static function DB_PASSWORD(){
-        return Config::get_env("DB_PASSWORD", "vA323dsrUN");
+        return Config::get_env("DB_PASSWORD", "");
     }
 
     public static function DB_SCHEME(){
-        return Config::get_env("DB_SCHEME", "sql11479687");
+        return Config::get_env("DB_SCHEME", "web_schema_masic");
     }
 
     public static function DB_PORT(){
