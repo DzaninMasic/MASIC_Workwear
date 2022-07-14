@@ -411,7 +411,8 @@ var MaterialService = {
           html="";
           html+=`<div style="float:left">
             <form class="d-flex">
-              <button class="btn btn-warning" type="button" style="margin-top:20px;" onclick="MaterialService.list()">Reset search</button>
+              <button class="btn btn-warning" type="button" style="margin-top:20px;" onclick="MaterialService.list()">Home</button>
+              <button class="btn btn-success" type="button" style="margin-top:20px; margin-left:10px" onclick="MaterialService.pieChart()">Chart version</button>
             </form>
           </div>`
           html+=`
@@ -443,6 +444,58 @@ var MaterialService = {
 
         },400);
 
+      },
+    });
+  },
+  pieChart:function(){
+    $.ajax({
+      url: "rest/length",
+      type: "GET",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
+      success: function(data){
+        html="";
+        $("#material-list").html("");
+        html+=`<div style="float:left">
+          <form class="d-flex">
+            <button class="btn btn-warning" type="button" style="margin-top:20px; margin-bottom: 10px;" onclick="MaterialService.list()">Home</button>
+          </form>
+        </div>`
+        html+=`
+        <head>
+        <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+          var data = google.visualization.arrayToDataTable([
+            ['Task', 'Hours per Day'],
+            `;
+            for(let i=0;i<data.length;i++){
+              html+=`
+                ['`+data[i].color_name+`',`+data[i].sum_length+`],
+              `;
+            }
+            html+=`
+          ]);
+
+          var options = {
+            title: 'Percentage of all colors'
+          };
+
+          var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+          chart.draw(data, options);
+        }
+        </script>
+        </head>
+        <body>
+        <div id="piechart" style="width: 100vw; height: 80vh;"></div>
+        </body>
+        `;
+        $("#material-list").html(html);
       },
     });
   }

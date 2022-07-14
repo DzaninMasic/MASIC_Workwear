@@ -45,7 +45,7 @@ class MaterialDao extends BaseDao{
       ON material.color_id = colors.id
       LEFT JOIN types ON material.type_id=types.id
       LEFT JOIN brands ON material.brand_id=brands.id
-      WHERE LOWER(brands.name) LIKE '%".$name."%' ORDER BY type_name ASC;";
+      WHERE LOWER(brands.name) LIKE '%".$name."%' OR LOWER(types.name) LIKE '%".$name."%' ORDER BY type_name ASC;";
     $stmt = $this->conn->prepare($query);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
