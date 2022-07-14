@@ -7,7 +7,7 @@
 * @OA\Post(
 *     path="/login",
 *     description="Login to the system",
-*     tags={"material"},
+*     tags={"login"},
 *   @OA\RequestBody(description="Basic admin info", required=true,
 *       @OA\MediaType(mediaType="application/json",
 *    			@OA\Schema(
