@@ -11,6 +11,7 @@ var ColorService={
 
   add: function(color){
     console.log("Nas log",color);
+    $('.add-color-button').attr('disabled', true);
     $.ajax({
       url: 'rest/colors',
       type: 'POST',
@@ -22,6 +23,7 @@ var ColorService={
       },
       success: function(result){
         toastr.success("Color added!");
+        $('.add-color-button').attr('disabled', false);
         $("#exampleModal4").modal("hide");
         $("#material-list").html('<div class="d-flex justify-content-center"><div class="spinner-border text-primary" style="width : 5rem ; height : 5rem;" role="status"> <span class="sr-only"></span>  </div></div>');
         //console.log(data);

@@ -45,6 +45,7 @@ var MaterialService = {
                   <h5 class="card-title" style="padding:50px; background-color:`+data[i].color_name+`;color:white;text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; text-align:center">`+ data[i].type_name +`</h5>
                   <p>
                     <p style="margin-bottom:0px">Brand: `+ data[i].brand_name +`</p>
+                    <p style="margin-bottom:0px">Color: `+ data[i].color_name +`</p>
                     <p style="margin-bottom:0px">Length: `+ data[i].length +`</p>
                     <p>Available: `+ data[i].available +`</p>
                     <button type="button" class="btn btn-primary material-button" onclick="MaterialService.get(`+data[i].id+`)">
