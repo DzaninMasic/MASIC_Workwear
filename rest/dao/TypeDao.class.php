@@ -2,12 +2,12 @@
 
 require_once __DIR__.'/BaseDao.class.php';
 
-class BrandsDao extends BaseDao{
+class TypeDao extends BaseDao{
   private static $instance = null;
 
   //CONSTRUCTOR
   private function __construct(){
-    parent::__construct("brands");
+    parent::__construct("types");
   }
 
   public static function getInstance() {
@@ -17,8 +17,8 @@ class BrandsDao extends BaseDao{
     return self::$instance;
   }
 
-  public function getMaterialByBrandId($brandId){
-    return $this->query("SELECT * FROM material WHERE brand_id = :brand_id", ['brand_id' => $brandId]);
+  public function getMaterialByTypeId($typeId){
+    return $this->query("SELECT * FROM material WHERE type_id = :type_id", ['type_id' => $typeId]);
   }
 }
 

@@ -1,9 +1,9 @@
 <?php
   require_once __DIR__.'/BaseService.class.php';
   require_once __DIR__.'/../dao/MaterialDao.class.php';
-  require_once __DIR__.'/../dao/BrandsDao.class.php';
-  require_once __DIR__.'/../dao/TypesDao.class.php';
-  require_once __DIR__.'/../dao/ColorsDao.class.php';
+  require_once __DIR__.'/../dao/BrandDao.class.php';
+  require_once __DIR__.'/../dao/TypeDao.class.php';
+  require_once __DIR__.'/../dao/ColorDao.class.php';
 
   class MaterialService extends BaseService{
 
@@ -13,9 +13,9 @@
 
     public function __construct(){
       parent::__construct(MaterialDao::getInstance());
-      $this->brandDao = BrandsDao::getInstance();
-      $this->typeDao = TypesDao::getInstance();
-      $this->colorDao = ColorsDao::getInstance();
+      $this->brandDao = BrandDao::getInstance();
+      $this->typeDao = TypeDao::getInstance();
+      $this->colorDao = ColorDao::getInstance();
     }
 
     public function add($entity){

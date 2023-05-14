@@ -1,11 +1,11 @@
 <?php
   require_once __DIR__.'/BaseService.class.php';
-  require_once __DIR__.'/../dao/ColorsDao.class.php';
+  require_once __DIR__.'/../dao/ColorDao.class.php';
 
   class ColorsService extends BaseService{
 
     public function __construct(){
-      parent::__construct(ColorsDao::getInstance());
+      parent::__construct(ColorDao::getInstance());
     }
 
     public function add($entity){

@@ -12,12 +12,12 @@
   require_once __DIR__.'/services/TypesService.class.php';
   require_once __DIR__.'/services/BrandsService.class.php';
   require_once __DIR__.'/services/AdminService.class.php';
-  require_once __DIR__.'/dao/AdminsDao.class.php';
-  require_once __DIR__.'/dao/TypesDao.class.php';
-  require_once __DIR__.'/dao/BrandsDao.class.php';
+  require_once __DIR__.'/dao/AdminDao.class.php';
+  require_once __DIR__.'/dao/TypeDao.class.php';
+  require_once __DIR__.'/dao/BrandDao.class.php';
 
-  Flight::register('adminsDao', 'AdminsDao');
-  Flight::register('brandsDao', 'BrandsDao');
+  Flight::register('adminDao', 'AdminDao');
+  Flight::register('brandDao', 'BrandDao');
   Flight::register('materialService', 'MaterialService');
   Flight::register('colorsService', 'ColorsService');
   Flight::register('adminService', 'AdminService');

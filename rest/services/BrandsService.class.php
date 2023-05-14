@@ -1,11 +1,11 @@
 <?php
   require_once __DIR__.'/BaseService.class.php';
-  require_once __DIR__.'/../dao/BrandsDao.class.php';
+  require_once __DIR__.'/../dao/BrandDao.class.php';
 
   class BrandsService extends BaseService{
 
     public function __construct(){
-      parent::__construct(BrandsDao::getInstance());
+      parent::__construct(BrandDao::getInstance());
     }
     
     public function getMaterialByBrandId($brandId){
