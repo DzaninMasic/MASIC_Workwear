@@ -45,7 +45,7 @@
 
   //GET INDIVIDUAL BY COLOR
   Flight::route('GET /material/@id/colors', function($id){
-    Flight::json(Flight::colorsService()->getMaterialByColorId($id));
+    Flight::json(Flight::colorService()->getMaterialByColorId($id));
   });
 
   /**

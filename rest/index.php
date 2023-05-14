@@ -8,21 +8,26 @@
 
   require_once __DIR__.'/../vendor/autoload.php';
   require_once __DIR__.'/services/MaterialService.class.php';
-  require_once __DIR__.'/services/ColorsService.class.php';
-  require_once __DIR__.'/services/TypesService.class.php';
-  require_once __DIR__.'/services/BrandsService.class.php';
+  require_once __DIR__.'/services/ColorService.class.php';
+  require_once __DIR__.'/services/TypeService.class.php';
+  require_once __DIR__.'/services/BrandService.class.php';
   require_once __DIR__.'/services/AdminService.class.php';
   require_once __DIR__.'/dao/AdminDao.class.php';
   require_once __DIR__.'/dao/TypeDao.class.php';
   require_once __DIR__.'/dao/BrandDao.class.php';
+  require_once __DIR__.'/routes/ColorRoutes.php';
+  require_once __DIR__.'/routes/MaterialRoutes.php';
+  require_once __DIR__.'/routes/AdminRoutes.php';
+  require_once __DIR__.'/routes/TypeRoutes.php';
+  require_once __DIR__.'/routes/BrandRoutes.php';
 
   Flight::register('adminDao', 'AdminDao');
   Flight::register('brandDao', 'BrandDao');
   Flight::register('materialService', 'MaterialService');
-  Flight::register('colorsService', 'ColorsService');
+  Flight::register('colorService', 'ColorService');
   Flight::register('adminService', 'AdminService');
-  Flight::register('typesService', 'TypesService');
-  Flight::register('brandsService', 'BrandsService');
+  Flight::register('typeService', 'TypeService');
+  Flight::register('brandService', 'BrandService');
 
   //MIDDLEWARE
   Flight::route('/*', function(){
@@ -53,10 +58,5 @@
     echo $openapi->toJson();
 });
 
-  require_once __DIR__.'/routes/ColorRoutes.php';
-  require_once __DIR__.'/routes/MaterialRoutes.php';
-  require_once __DIR__.'/routes/AdminRoutes.php';
-  require_once __DIR__.'/routes/TypeRoutes.php';
-  require_once __DIR__.'/routes/BrandRoutes.php';
   Flight::start();
 ?>

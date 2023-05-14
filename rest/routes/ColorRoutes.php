@@ -15,7 +15,7 @@
 
   //GET ALL
   Flight::route('GET /colors', function(){
-  Flight::json(Flight::colorsService()->getAll());
+  Flight::json(Flight::colorService()->getAll());
   });
 
   /**
@@ -27,20 +27,20 @@
   
   //GET INDIVIDUAL COLOR
   Flight::route('GET /colors/@id', function($id){
-    Flight::json(Flight::colorsService()->getById($id));
+    Flight::json(Flight::colorService()->getById($id));
   });
   //ADD
   Flight::route('POST /colors', function(){
-    Flight::json(Flight::colorsService()->add(Flight::request()->data->getData()));
+    Flight::json(Flight::colorService()->add(Flight::request()->data->getData()));
   });
   //UPDATE
   Flight::route('PUT /colors/@id', function($id){
     $data = Flight::request()->data->getData();
-    Flight::json(Flight::colorsService()->update($id, $data));
+    Flight::json(Flight::colorService()->update($id, $data));
   });
   //DELETE
   Flight::route('DELETE /colors/@id', function($id){
-    Flight::colorsService()->delete($id);
+    Flight::colorService()->delete($id);
     Flight::json(["message" => "deleted"]);
   });
 
