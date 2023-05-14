@@ -1,8 +1,22 @@
 <?php
   require_once __DIR__.'/BaseService.class.php';
   require_once __DIR__.'/../dao/MaterialDao.class.php';
+  require_once __DIR__.'/../dao/BrandsDao.class.php';
+  require_once __DIR__.'/../dao/TypesDao.class.php';
+  require_once __DIR__.'/../dao/ColorsDao.class.php';
 
   class MaterialService extends BaseService{
+
+    private $brandDao;
+    private $typeDao;
+    private $colorDao;
+
+    public function __construct(){
+      parent::__construct(MaterialDao::getInstance());
+      $this->brandDao = BrandsDao::getInstance();
+      $this->typeDao = TypesDao::getInstance();
+      $this->colorDao = ColorsDao::getInstance();
+    }
 
     public function add($entity){
       try {
@@ -15,16 +29,16 @@
           throw $e;
         }
       }
-
-      //return $this->dao->add($entity);
-    }
-
-    public function __construct(){
-      parent::__construct(new MaterialDao());
     }
 
     public function get_by_color_route($id){
-      return $this->dao->get_by_color_route($id);
+      $material = $this->dao->get_by_id($id);
+
+      $material['brands'] = $this->brandDao->get_all();
+      $material['types'] = $this->typeDao->get_all();
+      $material['colors'] = $this->colorDao->get_all();
+
+      return $material;
     }
 
     public function get_all_updated(){
@@ -32,9 +46,6 @@
     }
 
     public function get_searched($name){
-      //$var=$this->dao->get_searched($name);
-      //$var['brand_name']
-
       return $this->dao->get_searched($name);
     }
 

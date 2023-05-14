@@ -5,7 +5,7 @@
   class BrandsService extends BaseService{
 
     public function __construct(){
-      parent::__construct(new BrandsDao());
+      parent::__construct(BrandsDao::getInstance());
     }
     
     public function get_material_by_brand_id($brand_id){

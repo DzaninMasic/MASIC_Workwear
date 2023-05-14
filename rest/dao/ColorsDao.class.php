@@ -3,10 +3,18 @@
 require_once __DIR__.'/BaseDao.class.php';
 
 class ColorsDao extends BaseDao{
+  private static $instance = null;
 
   //CONSTRUCTOR
-  public function __construct(){
+  private function __construct(){
     parent::__construct("colors");
+  }
+  
+  public static function getInstance() {
+    if (!isset(self::$instance)) {
+      self::$instance = new self();
+    }
+    return self::$instance;
   }
 
   public function add($entity){

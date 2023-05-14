@@ -5,7 +5,7 @@
   class ColorsService extends BaseService{
 
     public function __construct(){
-      parent::__construct(new ColorsDao());
+      parent::__construct(ColorsDao::getInstance());
     }
 
     public function add($entity){

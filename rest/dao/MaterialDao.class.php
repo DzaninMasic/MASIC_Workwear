@@ -3,19 +3,23 @@
 require_once __DIR__.'/BaseDao.class.php';
 
 class MaterialDao extends BaseDao{
+  private static $instance = null;
 
   //CONSTRUCTOR
-  public function __construct(){
+  private function __construct(){
     parent::__construct("material");
   }
 
+  public static function getInstance() {
+    if (!isset(self::$instance)) {
+      self::$instance = new MaterialDao();
+    }
+    return self::$instance;
+  }
+
   public function get_by_color_route($id){
-    $stmt = $this->conn->prepare("SELECT material.id, material.brand_id, brands.name as brand_name, material.type_id,types.name as type_name, material.length,      material.available,material.color_id, colors.name as color_name
+    $stmt = $this->conn->prepare("SELECT *
       FROM material
-      LEFT JOIN colors
-      ON material.color_id = colors.id
-      LEFT JOIN types ON material.type_id=types.id
-      LEFT JOIN brands on material.brand_id=brands.id
       WHERE material.id = :id;");
 
     $stmt->execute(['id' => $id]);
@@ -31,7 +35,7 @@ class MaterialDao extends BaseDao{
       ON material.color_id = colors.id
       LEFT JOIN types ON material.type_id=types.id
       LEFT JOIN brands ON material.brand_id=brands.id
-      ORDER BY type_name ASC;");
+      ORDER BY material.id DESC;");
 
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);

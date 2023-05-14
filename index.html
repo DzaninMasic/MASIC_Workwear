@@ -32,6 +32,11 @@
           <li class="nav-item">
             <button style="margin-left:15px;" class="btn btn-outline-success color-button-add" data-bs-toggle="modal" data-bs-target="#exampleModal4">Add colors</button>
           </li>
+
+          <li class="nav-item">
+            <button style="margin-left:15px;" class="btn btn-outline-success color-button-add" data-bs-toggle="modal" data-bs-target="#exampleModal4">Add type</button>
+          </li>
+
         </ul>
         <form method="post">
           <div style="float:left;">
@@ -44,7 +49,7 @@
           </div>
         </form>
         <form class="d-flex">
-          <button class="btn btn-outline-success" type="button" style="margin-left:20px" onclick="AdminService.logout()">Logout</button>
+          <button class="btn" type="button" style="margin-left:20px; background-color: red;" onclick="AdminService.logout()">Logout</button>
         </form>
       </div>
     </div>
@@ -240,6 +245,9 @@
     </div>
   </div>
 </div>
+
+
+
 <script>
 
     function getSearchResult(){

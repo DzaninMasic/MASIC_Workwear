@@ -11,6 +11,7 @@
   require_once __DIR__.'/services/ColorsService.class.php';
   require_once __DIR__.'/services/TypesService.class.php';
   require_once __DIR__.'/services/BrandsService.class.php';
+  require_once __DIR__.'/services/AdminService.class.php';
   require_once __DIR__.'/dao/AdminsDao.class.php';
   require_once __DIR__.'/dao/TypesDao.class.php';
   require_once __DIR__.'/dao/BrandsDao.class.php';
@@ -30,11 +31,12 @@
   Flight::route('/*', function(){
     //perform JWT decode
     $path = Flight::request()->url;
+
     if ($path == '/login' || $path == '/docs.json') return TRUE; // exclude login route from middleware
 
     $headers = getallheaders();
     if (@!$headers['Authorization']){
-      Flight::json(["message" => "Authorization is missing"], 403);
+      Flight::json(["message" => "Authorization missing!"], 403);
       return FALSE;
     }else{
       try {

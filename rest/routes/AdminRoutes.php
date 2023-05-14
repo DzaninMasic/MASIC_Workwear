@@ -22,7 +22,7 @@
 *
 *     ),
 *     @OA\Response(
-*         response=404,
+*         response=403,
 *         description="unauthorized",
 *     )
 * )
@@ -31,8 +31,8 @@
   //ADMIN LOGIN CHECK
   Flight::route('POST /login', function(){
     $login=Flight::request()->data->getData();
-
-    $admin=Flight::adminsDao()->get_admin_by_email($login['email']);
+    
+    $admin=Flight::adminService()->getAdminByEmail($login['email']);
 
     if(isset($admin['id'])){
       if($admin['password']==md5($login['password'])){
@@ -40,10 +40,10 @@
         $jwt = JWT::encode($admin, Config::JWT_SECRET(), 'HS256');
         Flight::json(['token'=>$jwt]);
       }else {
-        Flight::json(["message"=>"Incorrect password"],404);
+        Flight::json(["message"=>"Incorrect password"],403);
       }
     }else{
-      Flight::json(["message"=>"Admin doesn't exist"],404);
+      Flight::json(["message"=>"Admin doesn't exist"],403);
     }
   });
 

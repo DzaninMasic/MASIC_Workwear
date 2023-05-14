@@ -15,6 +15,7 @@ var MaterialService = {
       url: "rest/material",
       type: "GET",
       beforeSend: function(xhr){
+        console.log('AUTH HEADER: ', localStorage.getItem('token'))
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
       },
       success: function(data){
@@ -64,6 +65,10 @@ var MaterialService = {
         </button>`;
         $("#material-list").html(html);
       },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        console.log('ERROR', XMLHttpRequest.responseText)
+        //toastr.error(XMLHttpRequest.responseJSON.message);
+      }
     });
   },
 
@@ -122,10 +127,48 @@ var MaterialService = {
   get: function(id){
     $('.material-button').attr('disabled', true);
     $('.material-button-delete').attr('disabled', true);
-    let options="";
-    let options2="";
-    let options3="";
+
+
     $.ajax({
+      url: 'rest/material/'+id,
+      type: "GET",
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
+      },
+      success: function(data){
+        console.log(data);
+
+        var options = '';
+        for(let i=0;i<data.colors.length;i++){
+          options+=`<option value="${data.colors[i].id}">${data.colors[i].name}</option>`
+        }
+        $("#color_id").html(options);
+
+          var options2 = '';
+        for(let i=0;i<data.types.length;i++){
+          options2+=`<option value="${data.types[i].id}">${data.types[i].name}</option>`
+        }
+        $("#type_id").html(options2);
+
+        var options3 = '';
+        for(let i=0;i<data.brands.length;i++){
+          options3+=`<option value="${data.brands[i].id}">${data.brands[i].name}</option>`
+        }
+        $("#brand_id").html(options3);
+
+        $('#brand_id option[value="'+data.brand_id+'"]').prop('selected', true);
+        $('#type_id option[value="'+data.type_id+'"]').prop('selected', true);
+        $("#id").val(data.id);
+        $("#length").val(data.length);
+        $("#available").val(data.available);
+        $('#color_id option[value="'+data.color_id+'"]').prop('selected', true);
+        $("#exampleModal").modal("show");
+        $('.material-button').attr('disabled', false);
+        $('.material-button-delete').attr('disabled', false);
+      },
+    });
+
+    /*$.ajax({
       url: 'rest/colors/',
       type: "GET",
       beforeSend: function(xhr){
@@ -182,7 +225,7 @@ var MaterialService = {
           },
         });
       },
-    });
+    });*/
   },
 
   update: function(){

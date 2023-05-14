@@ -3,10 +3,18 @@
 require_once __DIR__.'/BaseDao.class.php';
 
 class TypesDao extends BaseDao{
+  private static $instance = null;
 
   //CONSTRUCTOR
-  public function __construct(){
+  private function __construct(){
     parent::__construct("types");
+  }
+
+  public static function getInstance() {
+    if (!isset(self::$instance)) {
+      self::$instance = new self();
+    }
+    return self::$instance;
   }
 
   public function get_material_by_type_id($type_id){
