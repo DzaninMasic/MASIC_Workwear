@@ -28,13 +28,13 @@ class BaseDao{
   }
   
   //GET ALL
-  public function get_all(){
+  public function getAll(){
     $stmt = $this->conn->prepare("SELECT * FROM ".$this->tableName);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
   //GET BY ID
-  public function get_by_id($id){
+  public function getById($id){
     $stmt = $this->conn->prepare("SELECT * FROM ".$this->tableName." WHERE id = :id");
     $stmt->execute(['id' => $id]);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -66,13 +66,13 @@ class BaseDao{
     return $entity;
   }
   //UPDATE
-  public function update($id, $entity, $id_column = "id"){
+  public function update($id, $entity, $idColumn = "id"){
     $query = "UPDATE ".$this->tableName." SET ";
     foreach($entity as $name => $value){
       $query .= $name ."= :". $name. ", ";
     }
     $query = substr($query, 0, -2);
-    $query .= " WHERE ${id_column} = :id";
+    $query .= " WHERE ${idColumn} = :id";
 
     $stmt= $this->conn->prepare($query);
     $entity['id'] = $id;
@@ -85,7 +85,7 @@ class BaseDao{
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  protected function query_unique($query, $params){
+  protected function queryUnique($query, $params){
     $results = $this->query($query, $params);
     return reset($results);
   }

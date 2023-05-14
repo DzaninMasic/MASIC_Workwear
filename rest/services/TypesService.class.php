@@ -8,8 +8,8 @@
       parent::__construct(TypesDao::getInstance());
     }
     
-    public function get_material_by_type_id($type_id){
-      return $this->dao->get_material_by_type_id($type_id);
+    public function getMaterialByTypeId($typeId){
+      return $this->dao->getMaterialByTypeId($typeId);
     }
   }
 ?>

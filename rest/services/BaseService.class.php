@@ -6,12 +6,12 @@
       $this->dao = $dao;
     }
 
-    public function get_all(){
-    return $this->dao->get_all();
+    public function getAll(){
+    return $this->dao->getAll();
     }
 
-    public function get_by_id($id){
-      return $this->dao->get_by_id($id);
+    public function getById($id){
+      return $this->dao->getById($id);
     }
 
     public function add($entity){

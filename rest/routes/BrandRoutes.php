@@ -1,14 +1,11 @@
 <?php
-  Flight::route('/print4', function(){
-    echo "This is Dzanin 4 \n";
-  });
   //GET ALL
   Flight::route('GET /brands', function(){
-  Flight::json(Flight::brandsService()->get_all());
+  Flight::json(Flight::brandsService()->getAll());
   });
-  //GET INDIVIDUAL BY NAME
+  //GET INDIVIDUAL BY ID
   Flight::route('GET /brands/@id', function($id){
-    Flight::json(Flight::brandsService()->get_by_id($id));
+    Flight::json(Flight::brandsService()->getById($id));
   });
   //ADD
   Flight::route('POST /brands', function(){
@@ -17,7 +14,6 @@
   //UPDATE
   Flight::route('PUT /brands/@id', function($id){
     $data = Flight::request()->data->getData();
-    //$data['id'] = $id;
     Flight::json(Flight::brandsService()->update($id, $data));
   });
   //DELETE

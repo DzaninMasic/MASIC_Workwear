@@ -31,30 +31,30 @@
       }
     }
 
-    public function get_by_color_route($id){
-      $material = $this->dao->get_by_id($id);
+    public function getByColorRoute($id){
+      $material = $this->dao->getById($id);
 
-      $material['brands'] = $this->brandDao->get_all();
-      $material['types'] = $this->typeDao->get_all();
-      $material['colors'] = $this->colorDao->get_all();
+      $material['brands'] = $this->brandDao->getAll();
+      $material['types'] = $this->typeDao->getAll();
+      $material['colors'] = $this->colorDao->getAll();
 
       return $material;
     }
 
-    public function get_all_updated(){
-      return $this->dao->get_all_updated();
+    public function getAllMaterialInfo(){
+      return $this->dao->getAllMaterialInfo();
     }
 
-    public function get_searched($name){
-      return $this->dao->get_searched($name);
+    public function getSearched($name){
+      return $this->dao->getSearched($name);
     }
 
-    public function filter_search($type, $order){
-      return $this->dao->filter_search($type, $order);
+    public function filterSearch($type, $order){
+      return $this->dao->filterSearch($type, $order);
     }
 
-    public function color_length(){
-      return $this->dao->color_length();
+    public function getColorLength(){
+      return $this->dao->getColorLength();
     }
   }
 ?>

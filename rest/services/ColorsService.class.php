@@ -19,11 +19,10 @@
           throw $e;
         }
       }
-      //return $this->dao->add($entity);
     }
 
-    public function get_material_by_color_id($color_id){
-      return $this->dao->get_material_by_color_id($color_id);
+    public function getMaterialByColorId($colorId){
+      return $this->dao->getMaterialByColorId($colorId);
     }
   }
 ?>

@@ -17,8 +17,8 @@ class BrandsDao extends BaseDao{
     return self::$instance;
   }
 
-  public function get_material_by_brand_id($brand_id){
-    return $this->query("SELECT * FROM material WHERE brand_id = :brand_id", ['brand_id' => $brand_id]);
+  public function getMaterialByBrandId($brandId){
+    return $this->query("SELECT * FROM material WHERE brand_id = :brand_id", ['brand_id' => $brandId]);
   }
 }
 

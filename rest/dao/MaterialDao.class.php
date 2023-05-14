@@ -17,7 +17,7 @@ class MaterialDao extends BaseDao{
     return self::$instance;
   }
 
-  public function get_by_color_route($id){
+  public function getByColorRoute($id){
     $stmt = $this->conn->prepare("SELECT *
       FROM material
       WHERE material.id = :id;");
@@ -28,7 +28,7 @@ class MaterialDao extends BaseDao{
     return reset($result);
   }
 
-  public function get_all_updated(){
+  public function getAllMaterialInfo(){
     $stmt = $this->conn->prepare("SELECT material.id, brands.name as brand_name, types.name as type_name, material.length, material.available, colors.name as color_name
       FROM material
       LEFT JOIN colors
@@ -41,7 +41,7 @@ class MaterialDao extends BaseDao{
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public function get_searched($name){
+  public function getSearched($name){
     $name=strtolower($name);
     $query="SELECT material.id, brands.name as brand_name, types.name as type_name, material.length, material.available, colors.name as color_name
       FROM material
@@ -55,7 +55,7 @@ class MaterialDao extends BaseDao{
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public function filter_search($type, $order){
+  public function filterSearch($type, $order){
     $query="SELECT material.id, brands.name as brand_name, types.name as type_name, material.length, material.available, colors.name as color_name
         FROM material
         LEFT JOIN colors
@@ -68,7 +68,7 @@ class MaterialDao extends BaseDao{
       return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public function color_length(){
+  public function getColorLength(){
     $query="SELECT c.name as color_name, SUM(m.length) as sum_length
         FROM material m
         JOIN colors c ON c.id = m.color_id
@@ -78,7 +78,4 @@ class MaterialDao extends BaseDao{
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 }
-
-  //as color_name, colors.id
-  //SELECT * FROM ".$this->table_name." WHERE id = :id
 ?>

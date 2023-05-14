@@ -17,8 +17,8 @@ class TypesDao extends BaseDao{
     return self::$instance;
   }
 
-  public function get_material_by_type_id($type_id){
-    return $this->query("SELECT * FROM material WHERE type_id = :type_id", ['type_id' => $type_id]);
+  public function getMaterialByTypeId($typeId){
+    return $this->query("SELECT * FROM material WHERE type_id = :type_id", ['type_id' => $typeId]);
   }
 }
 

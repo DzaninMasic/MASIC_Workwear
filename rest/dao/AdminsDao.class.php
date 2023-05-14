@@ -18,7 +18,7 @@ class AdminsDao extends BaseDao{
   }
 
   public function getAdminByEmail($email){
-    return $this->query_unique("SELECT * FROM admins WHERE email=:email",['email'=>$email]);
+    return $this->queryUnique("SELECT * FROM admins WHERE email=:email",['email'=>$email]);
   }
 }
 ?>

@@ -8,8 +8,8 @@
       parent::__construct(BrandsDao::getInstance());
     }
     
-    public function get_material_by_brand_id($brand_id){
-      return $this->dao->get_material_by_brand_id($brand_id);
+    public function getMaterialByBrandId($brandId){
+      return $this->dao->getMaterialByBrandId($brandId);
     }
   }
 ?>

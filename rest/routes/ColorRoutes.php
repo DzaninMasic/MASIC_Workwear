@@ -1,7 +1,4 @@
 <?php
-  Flight::route('/print2', function(){
-    echo "This is Dzanin 2 \n";
-  });
 
   /**
  * @OA\Get(
@@ -18,7 +15,7 @@
 
   //GET ALL
   Flight::route('GET /colors', function(){
-  Flight::json(Flight::colorsService()->get_all());
+  Flight::json(Flight::colorsService()->getAll());
   });
 
   /**
@@ -30,7 +27,7 @@
   
   //GET INDIVIDUAL COLOR
   Flight::route('GET /colors/@id', function($id){
-    Flight::json(Flight::colorsService()->get_by_id($id));
+    Flight::json(Flight::colorsService()->getById($id));
   });
   //ADD
   Flight::route('POST /colors', function(){
@@ -39,7 +36,6 @@
   //UPDATE
   Flight::route('PUT /colors/@id', function($id){
     $data = Flight::request()->data->getData();
-    //$data['id'] = $id;
     Flight::json(Flight::colorsService()->update($id, $data));
   });
   //DELETE
