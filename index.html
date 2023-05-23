@@ -20,14 +20,14 @@
 <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#" onclick="MaterialService.list()">MASIC Workwear</a>
+      <a class="navbar-brand" href="#" onclick="materialService.list()">MASIC Workwear</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#" onclick="MaterialService.list()">Home</a>
+            <a class="nav-link active" aria-current="page" href="#" onclick="materialService.list()">Home</a>
           </li>
           <li class="nav-item">
             <button style="margin-left:15px;" class="btn btn-outline-success color-button-add" data-bs-toggle="modal" data-bs-target="#exampleModal4">Add colors</button>
@@ -44,7 +44,7 @@
           </div>
         </form>
         <form class="d-flex">
-          <button class="btn" type="button" style="margin-left:20px; background-color: red;" onclick="AdminService.logout()">Logout</button>
+          <button class="btn" type="button" style="margin-left:20px; background-color: red;" onclick="adminService.logout()">Logout</button>
         </form>
       </div>
     </div>
@@ -107,10 +107,6 @@
 
           </select>
         </div>
-        <!--<div class="form-group">
-          <label>Color</label>
-          <input name="color" id="color" type="text" class="form-control required" placeholder="Enter color">
-        </div>-->
         <div class="form-group">
           <label>Length</label>
           <input name="length" id="length" type="number" class="form-control required" placeholder="Enter length">
@@ -122,7 +118,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary save-material-button" onclick="MaterialService.update()">Save changes</button>
+        <button type="button" class="btn btn-primary save-material-button" onclick="materialService.update()">Save changes</button>
       </div>
     </div>
   </div>
@@ -163,7 +159,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary delete-material-button" onclick="MaterialService.delete()">Delete item</button>
+        <button type="button" class="btn btn-primary delete-material-button" onclick="materialService.delete()">Delete item</button>
       </div>
     </div>
   </div>
@@ -247,7 +243,7 @@
 
     function getSearchResult(){
       var name = document.getElementById("search-material").value;
-      MaterialService.listSearchedMaterial(name);
+      materialService.listSearchedMaterial(name);
     }
 
     let options3="";
@@ -301,8 +297,8 @@
   var token=localStorage.getItem("token");
 
   if(token){
-    MaterialService.init();
-    ColorService.init();
+    materialService.init();
+    colorService.init();
   }else{
     window.location.replace("login.html");
   }
@@ -317,11 +313,9 @@
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
       },
       success: function(data){
-        console.log(data[0].brand_name);
         $("#brand-delete-modal").val(data[0].brand_name);
         $("#type-delete-modal").val(data[0].type_name);
         $("#id-delete-modal").val(data[0].id);
-        //$("#color-delete-modal").val(data.color);
         $("#color-delete-modal").val(data[0].color_name);
         $("#length-delete-modal").val(data[0].length);
         $("#available-delete-modal").val(data[0].available);
@@ -331,27 +325,6 @@
       },
     });
   }
-  //ADD NEW ITEM MODAL
-  /*function showModalAdd(){
-    $('.material-button').attr('disabled', true);
-    $('.material-button-delete').attr('disabled', true);
-    $.ajax({
-      url: 'rest/material/'+id,
-      type: "GET",
-      beforeSend: function(xhr){
-        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
-      },
-      success: function(data){
-        console.log(data);
-        //$("#name-add-modal").val(data.name);
-        $("#length-add-modal").val(data.length);
-        $("#available-add-modal").val(data.available);
-        $("#exampleModal3").modal("show");
-        $('.material-button').attr('disabled', false);
-        $('.material-button-delete').attr('disabled', false);
-      },
-    });
-  }*/
   //ADD NEW COLOR MODAL
   function showModalColorAdd(){
     $('.color-button-add').attr('disabled', true);
@@ -364,7 +337,6 @@
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
       },
       success: function(data){
-        console.log(data);
         $("#exampleModal4").modal("show");
         $('.material-button').attr('disabled', false);
         $('.material-button-delete').attr('disabled', false);

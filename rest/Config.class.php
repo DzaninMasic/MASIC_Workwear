@@ -14,7 +14,7 @@
     }
 
     public static function DB_SCHEME(){
-        return Config::get_env("DB_SCHEME", "web_schema_masic");
+        return Config::get_env("DB_SCHEME", "masic_workwear");
     }
 
     public static function DB_PORT(){
