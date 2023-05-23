@@ -136,7 +136,7 @@ var MaterialService = {
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
       },
       success: function(data){
-        console.log(data);
+        console.log(data.brands[0].name);
 
         var options = '';
         for(let i=0;i<data.colors.length;i++){
@@ -167,65 +167,6 @@ var MaterialService = {
         $('.material-button-delete').attr('disabled', false);
       },
     });
-
-    /*$.ajax({
-      url: 'rest/colors/',
-      type: "GET",
-      beforeSend: function(xhr){
-        xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
-      },
-      success: function(data){
-        for(let i=0;i<data.length;i++){
-          options+=`<option value="${data[i].id}">${data[i].name}</option>`
-        }
-        document.getElementById("color_id").innerHTML=options;
-        $.ajax({
-          url: 'rest/types/',
-          type: "GET",
-          beforeSend: function(xhr){
-            xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
-          },
-          success: function(data){
-            for(let i=0;i<data.length;i++){
-              options2+=`<option value="${data[i].id}">${data[i].name}</option>`
-            }
-            document.getElementById("type_id").innerHTML=options2;
-            $.ajax({
-              url: 'rest/brands/',
-              type: "GET",
-              beforeSend: function(xhr){
-                xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
-              },
-              success: function(data){
-                for(let i=0;i<data.length;i++){
-                  options3+=`<option value="${data[i].id}">${data[i].name}</option>`
-                }
-                document.getElementById("brand_id").innerHTML=options3;
-                $.ajax({
-                  url: 'rest/material/'+id,
-                  type: "GET",
-                  beforeSend: function(xhr){
-                    xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
-                  },
-                  success: function(data){
-                    console.log(data);
-                    $('#brand_id option[value="'+data.brand_id+'"]').prop('selected', true);
-                    $('#type_id option[value="'+data.type_id+'"]').prop('selected', true);
-                    $("#id").val(data.id);
-                    $("#length").val(data.length);
-                    $("#available").val(data.available);
-                    $('#color_id option[value="'+data.color_id+'"]').prop('selected', true);
-                    $("#exampleModal").modal("show");
-                    $('.material-button').attr('disabled', false);
-                    $('.material-button-delete').attr('disabled', false);
-                  },
-                });
-              },
-            });
-          },
-        });
-      },
-    });*/
   },
 
   update: function(){

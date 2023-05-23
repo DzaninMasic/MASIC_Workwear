@@ -12,22 +12,22 @@
  * )
  */
 
-  //GET ALL
   Flight::route('GET /material', function(){
   Flight::json(Flight::materialService()->getAllMaterialInfo());
   });
 
-  //GET SEARCHED
+  Flight::route('GET /material/individual/@id', function($id){
+    Flight::json(Flight::materialService()->getIndividualData($id));
+  });
+
   Flight::route('GET /search/@name', function($name){
   Flight::json(Flight::materialService()->getSearched($name));
   });
 
-  //FILTER
   Flight::route('GET /filter/@type/@order', function($type, $order){
   Flight::json(Flight::materialService()->filterSearch($type, $order));
   });
 
-  //SHOW TOTAL LENGTH FOR EACH COLOR
   Flight::route('GET /length', function(){
   Flight::json(Flight::materialService()->getColorLength());
   });
@@ -38,12 +38,10 @@
  *     @OA\Response(response="200", description="Fetch individual material")
  * )
  */
-  //GET INDIVIDUAL BY COLOR_ID WHICH INCLUDES THE NAME OF THE Color
   Flight::route('GET /material/@id', function($id){
     Flight::json(Flight::materialService()->getByColorRoute($id));
   });
 
-  //GET INDIVIDUAL BY COLOR
   Flight::route('GET /material/@id/colors', function($id){
     Flight::json(Flight::colorService()->getMaterialByColorId($id));
   });
@@ -76,11 +74,10 @@
   * )
   */
 //  *     security={{"ApiKeyAuth": {}},
-  //ADD
   Flight::route('POST /material', function(){
     Flight::json(Flight::materialService()->add(Flight::request()->data->getData()));
   });
-  //UPDATE
+
   Flight::route('PUT /material/@id', function($id){
     $data = Flight::request()->data->getData();
     Flight::json(Flight::materialService()->update($id, $data));
@@ -103,7 +100,6 @@
   * )
   */
 
-  //DELETE
   Flight::route('DELETE /material/@id', function($id){
     Flight::materialService()->delete($id);
     Flight::json(["message" => "deleted"]);

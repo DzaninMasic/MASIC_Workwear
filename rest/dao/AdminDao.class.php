@@ -5,7 +5,6 @@ require_once __DIR__.'/BaseDao.class.php';
 class AdminDao extends BaseDao{
   private static $instance = null;
 
-  //CONSTRUCTOR
   private function __construct(){
     parent::__construct("admins");
   }

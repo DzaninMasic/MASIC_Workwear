@@ -31,6 +31,10 @@
       }
     }
 
+    public function getIndividualData($id){
+      return $this->dao->getIndividualData($id);
+    }
+
     public function getByColorRoute($id){
       $material = $this->dao->getById($id);
 

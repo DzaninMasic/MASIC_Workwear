@@ -28,7 +28,6 @@
 * )
 */
 
-  //ADMIN LOGIN CHECK
   Flight::route('POST /login', function(){
     $login=Flight::request()->data->getData();
     

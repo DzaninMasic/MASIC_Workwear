@@ -7,11 +7,9 @@ class BaseDao{
   private static $pdoInstance = null;
   private $tableName;
 
-  //CONSTRUCTOR
   public function __construct($tableName){
     $this->tableName=$tableName;
     $this->conn = self::getPDO();
-    // set the PDO error mode to exception
     $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   }
 
@@ -27,26 +25,25 @@ class BaseDao{
     return self::$pdoInstance;
   }
   
-  //GET ALL
   public function getAll(){
     $stmt = $this->conn->prepare("SELECT * FROM ".$this->tableName);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
-  //GET BY ID
+
   public function getById($id){
     $stmt = $this->conn->prepare("SELECT * FROM ".$this->tableName." WHERE id = :id");
     $stmt->execute(['id' => $id]);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return reset($result);
   }
-  //DELETE 
+
   public function delete($id){
     $stmt = $this->conn->prepare("DELETE FROM ".$this->tableName." WHERE id=:id");
     $stmt->bindParam(':id', $id); 
     $stmt->execute();
   }
-  //ADD
+
   public function add($entity){
     $query = "INSERT INTO ".$this->tableName." (";
     foreach ($entity as $column => $value) {
@@ -65,7 +62,7 @@ class BaseDao{
     $entity['id'] = $this->conn->lastInsertId();
     return $entity;
   }
-  //UPDATE
+  
   public function update($id, $entity, $idColumn = "id"){
     $query = "UPDATE ".$this->tableName." SET ";
     foreach($entity as $name => $value){

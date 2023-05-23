@@ -5,7 +5,6 @@ require_once __DIR__.'/BaseDao.class.php';
 class MaterialDao extends BaseDao{
   private static $instance = null;
 
-  //CONSTRUCTOR
   private function __construct(){
     parent::__construct("material");
   }
@@ -26,6 +25,19 @@ class MaterialDao extends BaseDao{
 
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return reset($result);
+  }
+
+  public function getIndividualData($id) {
+    $stmt = $this->conn->prepare("SELECT material.id, brands.name as brand_name, types.name as type_name, material.length, material.available, colors.name as color_name
+      FROM material
+      LEFT JOIN colors
+      ON material.color_id = colors.id
+      LEFT JOIN types ON material.type_id=types.id
+      LEFT JOIN brands ON material.brand_id=brands.id
+      WHERE material.id = :id
+      ORDER BY material.id DESC;");
+    $stmt->execute(['id' => $id]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
   public function getAllMaterialInfo(){

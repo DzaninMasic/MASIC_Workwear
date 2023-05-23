@@ -32,11 +32,6 @@
           <li class="nav-item">
             <button style="margin-left:15px;" class="btn btn-outline-success color-button-add" data-bs-toggle="modal" data-bs-target="#exampleModal4">Add colors</button>
           </li>
-
-          <li class="nav-item">
-            <button style="margin-left:15px;" class="btn btn-outline-success color-button-add" data-bs-toggle="modal" data-bs-target="#exampleModal4">Add type</button>
-          </li>
-
         </ul>
         <form method="post">
           <div style="float:left;">
@@ -316,20 +311,20 @@
     $('.material-button').attr('disabled', true);
     $('.material-button-delete').attr('disabled', true);
     $.ajax({
-      url: 'rest/material/'+id,
+      url: 'rest/material/individual/'+id,
       type: "GET",
       beforeSend: function(xhr){
         xhr.setRequestHeader('Authorization', localStorage.getItem('token'));
       },
       success: function(data){
-        console.log(data);
-        $("#brand-delete-modal").val(data.brand_name);
-        $("#type-delete-modal").val(data.type_name);
-        $("#id-delete-modal").val(data.id);
+        console.log(data[0].brand_name);
+        $("#brand-delete-modal").val(data[0].brand_name);
+        $("#type-delete-modal").val(data[0].type_name);
+        $("#id-delete-modal").val(data[0].id);
         //$("#color-delete-modal").val(data.color);
-        $("#color-delete-modal").val(data.color_name);
-        $("#length-delete-modal").val(data.length);
-        $("#available-delete-modal").val(data.available);
+        $("#color-delete-modal").val(data[0].color_name);
+        $("#length-delete-modal").val(data[0].length);
+        $("#available-delete-modal").val(data[0].available);
         $("#exampleModal2").modal("show");
         $('.material-button').attr('disabled', false);
         $('.material-button-delete').attr('disabled', false);
